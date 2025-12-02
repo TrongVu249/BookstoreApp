@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;  
 using BookstoreApp.Server.Data; 
+using BookstoreApp.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,10 @@ builder.Services.AddSwaggerGen();
 //Read connection string from appsettings.json
 builder.Services.AddDbContext<BookstoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//Dependency Injection for AuthService
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 
 //Configure CORS
 builder.Services.AddCors(options =>
