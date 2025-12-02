@@ -72,7 +72,7 @@ namespace BookstoreApp.Server.Controllers
 
         /// Get current user profile
         [HttpGet("me")]
-        [Authorize]
+        [Authorize] 
         public ActionResult GetCurrentUser()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
