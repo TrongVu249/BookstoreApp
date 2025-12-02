@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BookstoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//Dependency Injection for AuthService
+//Register AuthService for Dependency Injection
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 
