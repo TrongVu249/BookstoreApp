@@ -1,11 +1,7 @@
-﻿using BookstoreApp.Server.Data;
-using BookstoreApp.Server.DTOs.Auth;
-using BookstoreApp.Server.DTOs.User;
-using BookstoreApp.Server.Models;
+﻿using BookstoreApp.Server.DTOs.User;
 using BookstoreApp.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace BookstoreApp.Server.Controllers
