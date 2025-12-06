@@ -8,7 +8,6 @@ namespace BookstoreApp.Server.Services
 
         Task<AuthResponseDto> RegisterAsync(RegisterDto registerDto);
         Task<AuthResponseDto> LoginAsync(LoginDto loginDto);
-        Task<bool> ChangePasswordAsync(int userId, ChangePasswordDto changePasswordDto);
         Task<bool> UserExistsAsync(string email);
     }
 }

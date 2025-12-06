@@ -113,29 +113,6 @@ namespace BookstoreApp.Server.Services
             };
         }
 
-        public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordDto changePasswordDto)
-        {
-            var user = await _context.Users.FindAsync(userId);
-
-            if (user == null)
-            {
-                throw new Exception("User not found");
-            }
-
-            // Verify current password
-            if (!BCrypt.Net.BCrypt.Verify(changePasswordDto.CurrentPassword, user.PasswordHash))
-            {
-                throw new Exception("Current password is incorrect");
-            }
-
-            // Hash new password
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(changePasswordDto.NewPassword);
-            user.UpdatedAt = DateTime.UtcNow;
-
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
         public async Task<bool> UserExistsAsync(string email)
         {
             return await _context.Users.AnyAsync(u => u.Email == email);

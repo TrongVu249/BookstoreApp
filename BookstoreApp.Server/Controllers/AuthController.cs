@@ -47,29 +47,6 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Change password for authenticated user
-        [HttpPost("change-password")]
-        [Authorize] // Must be logged in
-        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
-        {
-            try
-            {
-                var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-                var success = await _authService.ChangePasswordAsync(userId, changePasswordDto);
-
-                if (success)
-                {
-                    return Ok(new { message = "Password changed successfully" });
-                }
-
-                return BadRequest(new { message = "Failed to change password" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
         /// Get current user profile
         [HttpGet("me")]
         [Authorize] 

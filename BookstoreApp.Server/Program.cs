@@ -21,6 +21,7 @@ builder.Services.AddDbContext<BookstoreDbContext>(options =>
 
 //Register AuthService for Dependency Injection
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 //Configure CORS

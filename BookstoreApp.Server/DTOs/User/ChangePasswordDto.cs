@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;    
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BookstoreApp.Server.DTOs.Auth
+namespace BookstoreApp.Server.DTOs.User
 {
     public class ChangePasswordDto
     {
