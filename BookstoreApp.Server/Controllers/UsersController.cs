@@ -52,7 +52,7 @@ namespace BookstoreApp.Server.Controllers
 
         /// Change password for authenticated user
         [HttpPost("change-password")]
-        [Authorize] // Must be logged in
+        [Authorize]
         public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
             try

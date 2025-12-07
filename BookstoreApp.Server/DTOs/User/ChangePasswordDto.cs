@@ -8,9 +8,9 @@ namespace BookstoreApp.Server.DTOs.User
         public string CurrentPassword { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "New password is required")]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
-            ErrorMessage = "Password must contain uppercase, lowercase, number, special character and has a minimum length of 8 characters")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$",
+            ErrorMessage = "Password must contain uppercase, lowercase, number, special character")]
         public string NewPassword { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Confirm password is required")]
