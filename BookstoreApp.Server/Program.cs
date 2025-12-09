@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;  
 using BookstoreApp.Server.Data; 
 using BookstoreApp.Server.Services;
+using BookstoreApp.Server.Services.Interfaces;
+using BookstoreApp.Server.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +21,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BookstoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//Register AuthService for Dependency Injection
+//Register Services for Dependency Injection
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 
 //Configure CORS

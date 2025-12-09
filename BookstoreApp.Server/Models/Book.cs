@@ -29,7 +29,7 @@ namespace BookstoreApp.Server.Models
         [MaxLength(2000)]
         public string? Description { get; set; }
 
-        [MaxLength(500)]
+        [Url]
         public string? ImageUrl { get; set; }
 
         [Required]

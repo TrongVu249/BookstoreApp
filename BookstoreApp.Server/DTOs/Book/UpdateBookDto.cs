@@ -36,7 +36,7 @@ namespace BookstoreApp.Server.DTOs.Book
         public DateTime? PublishDate { get; set; }
 
         [Range(1, 10000)]
-        public int? PageCount { get; set; }
+        public int PageCount { get; set; }
 
         [MaxLength(50)]
         public string? Language { get; set; }
