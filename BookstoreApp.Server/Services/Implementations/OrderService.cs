@@ -139,7 +139,7 @@ namespace BookstoreApp.Server.Services.Implementations
             var order = await _context.Orders
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Book)
-                .Include(o => o.Payments)
+                .Include(o => o.Payment)
                 .FirstOrDefaultAsync(o => o.Id == orderId && o.UserId == userId);
 
             if (order == null)
@@ -177,7 +177,7 @@ namespace BookstoreApp.Server.Services.Implementations
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Book)
                 .Include(o => o.User)
-                .Include(o => o.Payments)
+                .Include(o => o.Payment)
                 .AsQueryable();
 
             if (status.HasValue)
@@ -203,7 +203,7 @@ namespace BookstoreApp.Server.Services.Implementations
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Book)
                 .Include(o => o.User)
-                .Include(o => o.Payments)
+                .Include(o => o.Payment)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
 
             if (order == null)
@@ -247,7 +247,7 @@ namespace BookstoreApp.Server.Services.Implementations
             var order = await _context.Orders
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Book)
-                .Include(o => o.Payments)
+                .Include(o => o.Payment)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
 
             if (order == null)
@@ -313,17 +313,17 @@ namespace BookstoreApp.Server.Services.Implementations
                     PriceAtOrder = oi.PriceAtOrder,
                     Subtotal = oi.PriceAtOrder * oi.Quantity
                 }).ToList() ?? new List<OrderItemDto>(),
-                Payment = order.Payments != null ? new PaymentDto
+                Payment = order.Payment != null ? new PaymentDto
                 {
-                    Id = order.Payments.Id,
-                    OrderId = order.Payments.OrderId,
-                    PaymentMethod = order.Payments.PaymentMethod,
-                    Amount = order.Payments.Amount,
-                    Status = order.Payments.Status.ToString(),
-                    TransactionId = order.Payments.TransactionId,
-                    FailureReason = order.Payments.FailureReason,
-                    CreatedAt = order.Payments.CreatedAt,
-                    CompletedAt = order.Payments.CompletedAt
+                    Id = order.Payment.Id,
+                    OrderId = order.Payment.OrderId,
+                    PaymentMethod = order.Payment.PaymentMethod,
+                    Amount = order.Payment.Amount,
+                    Status = order.Payment.Status.ToString(),
+                    TransactionId = order.Payment.TransactionId,
+                    FailureReason = order.Payment.FailureReason,
+                    CreatedAt = order.Payment.CreatedAt,
+                    CompletedAt = order.Payment.CompletedAt
                 } : null
             };
         }

@@ -37,6 +37,6 @@ namespace BookstoreApp.Server.Models
         public DateTime? CompletedAt { get; set; }
 
         // Navigation property, represents relationship with Order entity
-        public Order Order { get; set; } = null!;
+        public Order? Order { get; set; }
     }
 }
