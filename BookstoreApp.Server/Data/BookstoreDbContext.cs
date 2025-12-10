@@ -166,6 +166,13 @@ namespace BookstoreApp.Server.Data
                       .HasForeignKey(e => e.UserId)
                       .OnDelete(DeleteBehavior.Restrict)
                       .HasConstraintName("FK_Orders_Users");
+
+                // Relationship: Order -> Payment (One-to-One)
+                entity.HasOne(e => e.Payment)
+                      .WithOne(p => p.Order)
+                      .HasForeignKey<Payment>(p => p.OrderId)
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .HasConstraintName("FK_Order_Payment");
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
@@ -214,13 +221,6 @@ namespace BookstoreApp.Server.Data
                 // Enum conversion
                 entity.Property(e => e.Status)
                       .HasConversion<int>();
-
-                // Relationship: Payment -> Order (Many-to-One)
-                entity.HasOne(e => e.Order)
-                      .WithMany(o => o.Payments)
-                      .HasForeignKey(e => e.OrderId)
-                      .OnDelete(DeleteBehavior.Cascade)
-                      .HasConstraintName("FK_Payments_Orders");
             });
 
             modelBuilder.Entity<InventoryLog>(entity =>

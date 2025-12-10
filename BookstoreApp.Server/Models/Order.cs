@@ -49,8 +49,9 @@ namespace BookstoreApp.Server.Models
 
         public DateTime? UpdatedAt { get; set; }
 
+        // Navigation property, represents relationship with User, OrderItem and Payment entity
         public User User { get; set; } = null!;
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-        public ICollection<Payment> Payments { get; set; } = new List<Payment>();
+        public Payment? Payment { get; set; }  // singular payment for the order
     }
 }
