@@ -8,9 +8,9 @@ namespace BookstoreApp.Server.Services.Implementations
 {
     public class CartService: ICartService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly BookstoreDbContext _context;
 
-        public CartService(ApplicationDbContext context)
+        public CartService(BookstoreDbContext context)
         {
             _context = context;
         }
