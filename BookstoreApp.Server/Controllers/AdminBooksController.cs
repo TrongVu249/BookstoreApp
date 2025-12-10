@@ -18,7 +18,7 @@ namespace BookstoreApp.Server.Controllers
             _bookService = bookService;
         }
 
-        /// Get all books (including all statuses)
+        // Get all books (including all statuses)
         [HttpGet]
         public async Task<ActionResult<List<BookDto>>> GetAllBooks([FromQuery] BookSearchDto searchDto)
         {
@@ -26,7 +26,7 @@ namespace BookstoreApp.Server.Controllers
             return Ok(books);
         }
 
-        /// Get book by ID
+        // Get book by ID
         [HttpGet("{id}")]
         public async Task<ActionResult<BookDto>> GetBook(int id)
         {
@@ -41,7 +41,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Create new book
+        // Create new book
         [HttpPost]
         public async Task<ActionResult<BookDto>> CreateBook([FromBody] CreateBookDto dto)
         {
@@ -56,7 +56,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Update book
+        // Update book
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateBook(int id, [FromBody] UpdateBookDto dto)
         {
@@ -75,7 +75,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Delete book
+        // Delete book
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBook(int id)
         {
@@ -94,7 +94,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Update book stock quantity
+        // Update book stock quantity
         [HttpPatch("{id}/stock")]
         public async Task<ActionResult> UpdateStock(int id, [FromBody] int quantity)
         {

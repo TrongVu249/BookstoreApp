@@ -2,7 +2,7 @@
 {
     public class AuthResponseDto
     {
-        //Return user info and token after login or register to frontend
+        // Return user info and token after login or register to frontend
 
         public int Id { get; set; }
         public string UserName { get; set; } = string.Empty;

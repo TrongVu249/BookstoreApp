@@ -17,7 +17,7 @@ namespace BookstoreApp.Server.Controllers
             _categoryService = categoryService;
         }
 
-        /// Get all categories (including inactive)
+        // Get all categories (including inactive)
         [HttpGet]
         public async Task<ActionResult<List<CategoryDto>>> GetAllCategories([FromQuery] bool? isActive)
         {
@@ -25,7 +25,7 @@ namespace BookstoreApp.Server.Controllers
             return Ok(categories);
         }
 
-        /// Get category by id
+        // Get category by id
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoryDto>> GetCategoryByID(int id)
         {
@@ -40,7 +40,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Create new category
+        // Create new category
         [HttpPost]
         public async Task<ActionResult<CategoryDto>> CreateCategory([FromBody] CreateCategoryDto dto)
         {
@@ -55,7 +55,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Update category
+        // Update category
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCategory(int id, [FromBody] UpdateCategoryDto dto)
         {
@@ -74,7 +74,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Delete category
+        // Delete category
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
@@ -93,7 +93,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Toggle category active status
+        // Toggle category active status
         [HttpPatch("{id}/toggle-status")]
         public async Task<ActionResult> ToggleStatus(int id)
         {

@@ -62,7 +62,7 @@ namespace BookstoreApp.Server.Services
 
         /////// ADMIN functionalities below
 
-        /// Get all users (Admin only)
+        // Get all users (Admin only)
         public async Task<List<UserDto>> GetAllUsersAsync(string? search = null, int? role = null, bool? isActive = null)
         {
             var query = _context.Users.AsQueryable();
@@ -108,7 +108,7 @@ namespace BookstoreApp.Server.Services
             return users;
         }
 
-        /// Get user by ID (Admin only)
+        // Get user by ID (Admin only)
         public async Task<UserDto> GetUserByIdAsync(int userId)
         {
             var user = await _context.Users.FindAsync(userId);
@@ -118,7 +118,7 @@ namespace BookstoreApp.Server.Services
             return MapToUserDto(user);
         }
 
-        /// Create new user (Admin only)
+        // Create new user (Admin only)
         public async Task<UserDto> CreateUserAsync(CreateUserDto createUserDto)
         {
             // Check if email already exists
@@ -148,7 +148,7 @@ namespace BookstoreApp.Server.Services
             return MapToUserDto(user);
         }
 
-        /// Update user (Admin only)
+        // Update user (Admin only)
         public async Task<bool> UpdateUserAsync(int userId, UpdateUserDto updateUserDto)
         {
             var user = await _context.Users.FindAsync(userId);

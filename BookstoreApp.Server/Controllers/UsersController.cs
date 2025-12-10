@@ -18,7 +18,7 @@ namespace BookstoreApp.Server.Controllers
             _userService = userService;
         }
 
-        /// Get current user's profile
+        // Get current user's profile
         [HttpGet("profile")]
         public async Task<ActionResult<UserDto>> GetProfile()
         {
@@ -34,7 +34,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Update current user's profile
+        // Update current user's profile
         [HttpPut("profile")]
         public async Task<ActionResult<UserDto>> UpdateProfile([FromBody] UpdateProfileDto updateDto)
         {
@@ -50,7 +50,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Change password for authenticated user
+        // Change password for authenticated user
         [HttpPost("change-password")]
         [Authorize]
         public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)

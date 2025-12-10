@@ -17,7 +17,7 @@ namespace BookstoreApp.Server.Controllers
             _authService = authService;
         }
 
-        /// Register a new customer account
+        // Register a new customer account
         [HttpPost("register")]
         public async Task<ActionResult<AuthResponseDto>> Register([FromBody] RegisterDto registerDto)
         {
@@ -32,7 +32,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Login with email and password
+        // Login with email and password
         [HttpPost("login")]
         public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto loginDto)
         {
@@ -47,7 +47,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Get current user profile
+        // Get current user profile
         [HttpGet("me")]
         [Authorize] 
         public ActionResult GetCurrentUser()
@@ -68,7 +68,7 @@ namespace BookstoreApp.Server.Controllers
             });
         }
 
-        /// Check if user is authenticated
+        // Check if user is authenticated
         [HttpGet("check")]
         [Authorize]
         public ActionResult CheckAuth()

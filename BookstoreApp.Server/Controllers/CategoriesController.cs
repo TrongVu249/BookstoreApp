@@ -16,7 +16,7 @@ namespace BookstoreApp.Server.Controllers
             _categoryService = categoryService;
         }
 
-        /// Get all active categories (public access)
+        // Get all active categories (public access)
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<List<CategoryDto>>> GetCategories()
@@ -25,7 +25,7 @@ namespace BookstoreApp.Server.Controllers
             return Ok(categories);
         }
 
-        /// Get category by id (public access)
+        // Get category by id (public access)
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<CategoryDto>> GetCategory(int id)

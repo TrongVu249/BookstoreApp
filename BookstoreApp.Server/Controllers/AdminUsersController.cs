@@ -18,7 +18,7 @@ namespace BookstoreApp.Server.Controllers
             _userService = userService;
         }
 
-        /// Get all users with optional filters
+        // Get all users with optional filters
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers(
             [FromQuery] string? search,
@@ -29,7 +29,7 @@ namespace BookstoreApp.Server.Controllers
             return Ok(users);
         }
 
-        /// Get user by ID
+        // Get user by ID
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
@@ -44,7 +44,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Create new user
+        // Create new user
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserDto createUserDto)
         {
@@ -59,7 +59,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Update user
+        // Update user
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUser(int id, [FromBody] UpdateUserDto updateUserDto)
         {
@@ -74,7 +74,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Toggle user active status
+        // Toggle user active status
         [HttpPatch("{id}/toggle-active")]
         public async Task<ActionResult> ToggleUserStatusStatus(int id)
         {
@@ -99,7 +99,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Assign role to user
+        // Assign role to user
         [HttpPatch("{id}/assign-role")]
         public async Task<ActionResult> AssignRole(int id, [FromBody] int role)
         {

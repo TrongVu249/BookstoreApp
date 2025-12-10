@@ -16,7 +16,7 @@ namespace BookstoreApp.Server.Controllers
             _bookService = bookService;
         }
 
-        /// Get all books with optional search and filters (public access)
+        // Get all books with optional search and filters (public access)
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<List<BookDto>>> GetBooks([FromQuery] BookSearchDto searchDto)
@@ -25,7 +25,7 @@ namespace BookstoreApp.Server.Controllers
             return Ok(books);
         }
 
-        /// Get book by ID (public access)
+        // Get book by ID (public access)
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<BookDto>> GetBook(int id)
@@ -41,7 +41,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// Search books by title or author (public access)
+        // Search books by title or author (public access)
         [HttpGet("search")]
         [AllowAnonymous]
         public async Task<ActionResult<List<BookDto>>> SearchBooks([FromQuery] string query)
