@@ -29,12 +29,12 @@ namespace BookstoreApp.Server.Controllers
 
         // Add book to wishlist
         [HttpPost]
-        public async Task<ActionResult<WishlistItemDto>> AddToWishlist([FromBody] AddToWishlistDto dto)
+        public async Task<ActionResult<WishlistItemDto>> AddToWishlist([FromBody] AddToWishlistDto addToWishlistDto)
         {
             try
             {
                 var userId = GetCurrentUserId();
-                var wishlistItem = await _wishlistService.AddToWishlistAsync(userId, dto);
+                var wishlistItem = await _wishlistService.AddToWishlistAsync(userId, addToWishlistDto);
                 return Ok(wishlistItem);
             }
             catch (KeyNotFoundException ex)

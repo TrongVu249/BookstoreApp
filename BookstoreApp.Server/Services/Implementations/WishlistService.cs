@@ -26,16 +26,16 @@ namespace BookstoreApp.Server.Services.Implementations
             return wishlistItems.Select(MapToWishlistItemDto).ToList();
         }
 
-        public async Task<WishlistItemDto> AddToWishlistAsync(int userId, AddToWishlistDto dto)
+        public async Task<WishlistItemDto> AddToWishlistAsync(int userId, AddToWishlistDto addToWishlistDto)
         {
             // Check if book exists
-            var book = await _context.Books.FindAsync(dto.BookId);
+            var book = await _context.Books.FindAsync(addToWishlistDto.BookId);
             if (book == null)
                 throw new KeyNotFoundException("Book not found");
 
             // Check if already in wishlist
             var existingItem = await _context.WishlistItems
-                .FirstOrDefaultAsync(wi => wi.UserId == userId && wi.BookId == dto.BookId);
+                .FirstOrDefaultAsync(wi => wi.UserId == userId && wi.BookId == addToWishlistDto.BookId);
 
             if (existingItem != null)
                 throw new InvalidOperationException("Book is already in your wishlist");
@@ -44,7 +44,7 @@ namespace BookstoreApp.Server.Services.Implementations
             var wishlistItem = new WishlistItem
             {
                 UserId = userId,
-                BookId = dto.BookId,
+                BookId = addToWishlistDto.BookId,
                 AddedAt = DateTime.UtcNow
             };
 

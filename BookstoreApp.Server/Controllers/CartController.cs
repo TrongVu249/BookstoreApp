@@ -29,12 +29,12 @@ namespace BookstoreApp.Server.Controllers
 
         /// Add item to cart
         [HttpPost]
-        public async Task<ActionResult<CartItemDto>> AddToCart([FromBody] AddToCartDto dto)
+        public async Task<ActionResult<CartItemDto>> AddToCart([FromBody] AddToCartDto addToCartDto)
         {
             try
             {
                 var userId = GetCurrentUserId();
-                var cartItem = await _cartService.AddToCartAsync(userId, dto);
+                var cartItem = await _cartService.AddToCartAsync(userId, addToCartDto);
                 return Ok(cartItem);
             }
             catch (KeyNotFoundException ex)
@@ -49,12 +49,12 @@ namespace BookstoreApp.Server.Controllers
 
         // Update cart item quantity
         [HttpPut("{bookId}")]
-        public async Task<ActionResult<CartItemDto>> UpdateCartItem(int bookId, [FromBody] UpdateCartItemDto dto)
+        public async Task<ActionResult<CartItemDto>> UpdateCartItem(int bookId, [FromBody] UpdateCartItemDto updateCartItemDto)
         {
             try
             {
                 var userId = GetCurrentUserId();
-                var cartItem = await _cartService.UpdateCartItemAsync(userId, bookId, dto);
+                var cartItem = await _cartService.UpdateCartItemAsync(userId, bookId, updateCartItemDto);
                 return Ok(cartItem);
             }
             catch (KeyNotFoundException ex)

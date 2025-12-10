@@ -33,25 +33,25 @@ namespace BookstoreApp.Server.Services.Implementations
             };
         }
 
-        public async Task<CartItemDto> AddToCartAsync(int userId, AddToCartDto dto)
+        public async Task<CartItemDto> AddToCartAsync(int userId, AddToCartDto addToCartDto)
         {
             // Check if book exists
-            var book = await _context.Books.FindAsync(dto.BookId);
+            var book = await _context.Books.FindAsync(addToCartDto.BookId);
             if (book == null)
                 throw new KeyNotFoundException("Book not found");
 
             // Check stock availability
-            if (book.StockQuantity < dto.Quantity)
+            if (book.StockQuantity < addToCartDto.Quantity)
                 throw new InvalidOperationException($"Only {book.StockQuantity} items available in stock");
 
             // Check if book is already in cart
             var existingCartItem = await _context.CartItems
-                .FirstOrDefaultAsync(ci => ci.UserId == userId && ci.BookId == dto.BookId);
+                .FirstOrDefaultAsync(ci => ci.UserId == userId && ci.BookId == addToCartDto.BookId);
 
             if (existingCartItem != null)
             {
                 // Update quantity
-                var newQuantity = existingCartItem.Quantity + dto.Quantity;
+                var newQuantity = existingCartItem.Quantity + addToCartDto.Quantity;
 
                 if (newQuantity > book.StockQuantity)
                     throw new InvalidOperationException($"Cannot add more. Only {book.StockQuantity} items available");
@@ -68,8 +68,8 @@ namespace BookstoreApp.Server.Services.Implementations
             var cartItem = new CartItem
             {
                 UserId = userId,
-                BookId = dto.BookId,
-                Quantity = dto.Quantity,
+                BookId = addToCartDto.BookId,
+                Quantity = addToCartDto.Quantity,
                 AddedAt = DateTime.UtcNow
             };
 
@@ -81,7 +81,7 @@ namespace BookstoreApp.Server.Services.Implementations
             return MapToCartItemDto(cartItem);
         }
 
-        public async Task<CartItemDto> UpdateCartItemAsync(int userId, int bookId, UpdateCartItemDto dto)
+        public async Task<CartItemDto> UpdateCartItemAsync(int userId, int bookId, UpdateCartItemDto updateCartItemDto)
         {
             var cartItem = await _context.CartItems
                 .Include(ci => ci.Book)
@@ -91,10 +91,10 @@ namespace BookstoreApp.Server.Services.Implementations
                 throw new KeyNotFoundException("Cart item not found");
 
             // Check stock availability
-            if (cartItem.Book!.StockQuantity < dto.Quantity)
+            if (cartItem.Book!.StockQuantity < updateCartItemDto.Quantity)
                 throw new InvalidOperationException($"Only {cartItem.Book.StockQuantity} items available in stock");
 
-            cartItem.Quantity = dto.Quantity;
+            cartItem.Quantity = updateCartItemDto.Quantity;
             await _context.SaveChangesAsync();
 
             return MapToCartItemDto(cartItem);
