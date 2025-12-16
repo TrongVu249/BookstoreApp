@@ -37,7 +37,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:55482", "http://localhost:3000") // React dev servers
+        policy.WithOrigins("https://localhost:55482") // React dev servers
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -85,7 +85,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowReact");
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 
