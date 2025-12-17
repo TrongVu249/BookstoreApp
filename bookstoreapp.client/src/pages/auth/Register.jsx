@@ -56,13 +56,29 @@ const Register = () => {
             // Remove confirmPassword before sending to backend
             const { confirmPassword, ...registerData } = formData;
 
+            if (!registerData.phoneNumber) {
+                registerData.phoneNumber = null;
+            }
+
+            if (!registerData.address) {
+                registerData.address = null;
+            }
+
             const result = await register(registerData);
 
             if (result.success) {
                 // Redirect to home or login page
                 navigate('/');
             } else {
-                setError(result.error?.message || 'Registration failed. Please try again.');
+                if (typeof result.error === 'string') {
+                    setError(result.error);
+                } else if (result.error?.errors) {
+                    // ASP.NET validation errors
+                    const firstKey = Object.keys(result.error.errors)[0];
+                    setError(result.error.errors[firstKey][0]);
+                } else {
+                    setError('Registration failed. Please try again.');
+                }
             }
         } catch (err) {
             setError('An unexpected error occurred. Please try again.');
