@@ -5,7 +5,16 @@ const authService = {
     register: async (userData) => {
         try {
             const response = await api.post('/auth/register', userData);
-            return response.data;
+            const data = response.data;
+
+            // Extract token and create user object from flat response
+            const { token, tokenExpiration, ...user } = data;
+
+            // Store token and user in localStorage
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+
+            return { token, user };
         } catch (error) {
             throw error.response?.data || 'Registration failed';
         }
@@ -15,7 +24,10 @@ const authService = {
     login: async (credentials) => {
         try {
             const response = await api.post('/auth/login', credentials);
-            const { token, user } = response.data;
+            const data = response.data;
+
+            // Extract token and create user object from flat response
+            const { token, tokenExpiration, ...user } = data;
 
             // Store token and user in localStorage
             localStorage.setItem('token', token);
