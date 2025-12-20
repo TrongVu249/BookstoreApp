@@ -12,7 +12,6 @@
     <Folder Include="src\components\common\" />
     <Folder Include="src\components\layout\" />
     <Folder Include="src\hooks\" />
-    <Folder Include="src\pages\customer\" />
     <Folder Include="src\pages\admin\" />
     <Folder Include="src\pages\staff\" />
     <Folder Include="src\styles\" />

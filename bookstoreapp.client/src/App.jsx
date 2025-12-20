@@ -11,6 +11,10 @@ import Register from './pages/auth/Register';
 // Public/Common Pages
 import Home from './pages/Home';
 
+// Customer Pages
+import Books from './pages/customer/Books';
+import BookDetail from './pages/customer/BookDetail';
+
 import './App.css';
 
 function App() {
@@ -36,10 +40,15 @@ function App() {
                                         path="/books"
                                         element={
                                             <ProtectedRoute allowedRoles={['Customer', 'Staff', 'Admin']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">📚 Books Catalog</h1>
-                                                    <p className="text-gray-600">Coming in Day 9!</p>
-                                                </div>
+                                                <Books />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="/books/:id"
+                                        element={
+                                            <ProtectedRoute allowedRoles={['Customer', 'Staff', 'Admin']}>
+                                                <BookDetail />
                                             </ProtectedRoute>
                                         }
                                     />
