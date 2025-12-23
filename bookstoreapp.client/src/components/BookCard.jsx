@@ -1,24 +1,47 @@
-// src/components/BookCard.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import cartService from '../services/cartService';
+import wishlistService from '../services/wishlistService';
 
 const BookCard = ({ book }) => {
     const { isAuthenticated, user } = useAuth();
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
+    const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
 
-    const handleAddToCart = (e) => {
+    const handleAddToCart = async (e) => {
         e.preventDefault();
-        // TODO: Implement add to cart (Day 10)
-        console.log('Add to cart:', book.id);
-        alert(`"${book.title}" will be added to cart (Coming in Day 10!)`);
+        if (!isAuthenticated || user?.role !== 'Customer') return;
+
+        setIsAddingToCart(true);
+        try {
+            await cartService.addToCart(book.id, 1);
+            alert(`"${book.title}" added to cart!`);
+        } catch (err) {
+            const errorMsg = err?.message || err || 'Failed to add to cart';
+            alert(errorMsg);
+            console.error('Error adding to cart:', err);
+        } finally {
+            setIsAddingToCart(false);
+        }
     };
 
-    const handleAddToWishlist = (e) => {
+    const handleAddToWishlist = async (e) => {
         e.preventDefault();
         e.stopPropagation();
-        // TODO: Implement add to wishlist (Day 10)
-        console.log('Add to wishlist:', book.id);
-        alert(`"${book.title}" will be added to wishlist (Coming in Day 10!)`);
+        if (!isAuthenticated || user?.role !== 'Customer') return;
+
+        setIsAddingToWishlist(true);
+        try {
+            await wishlistService.addToWishlist(book.id);
+            alert(`"${book.title}" added to wishlist!`);
+        } catch (err) {
+            const errorMsg = err?.message || err || 'Failed to add to wishlist';
+            alert(errorMsg);
+            console.error('Error adding to wishlist:', err);
+        } finally {
+            setIsAddingToWishlist(false);
+        }
     };
 
     // Stock status badge
@@ -67,7 +90,11 @@ const BookCard = ({ book }) => {
                         {isAuthenticated && user?.role === 'Customer' && (
                             <button
                                 onClick={handleAddToWishlist}
-                                className="p-2 text-gray-400 hover:text-red-500 transition"
+                                disabled={isAddingToWishlist}
+                                className={`p-2 transition ${isAddingToWishlist
+                                        ? 'text-gray-400 cursor-not-allowed'
+                                        : 'text-gray-400 hover:text-red-500'
+                                    }`}
                                 title="Add to Wishlist"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,13 +108,19 @@ const BookCard = ({ book }) => {
                         <div className="flex gap-2">
                             <button
                                 onClick={handleAddToCart}
-                                disabled={book.stockQuantity === 0}
+                                disabled={book.stockQuantity === 0 || isAddingToCart}
                                 className={`flex-1 py-2 px-4 rounded-lg font-medium transition ${book.stockQuantity === 0
                                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                        : 'bg-blue-600 text-white hover:bg-blue-700'
+                                        : isAddingToCart
+                                            ? 'bg-gray-400 text-white cursor-not-allowed'
+                                            : 'bg-blue-600 text-white hover:bg-blue-700'
                                     }`}
                             >
-                                {book.stockQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                                {isAddingToCart
+                                    ? 'Adding...'
+                                    : book.stockQuantity === 0
+                                        ? 'Out of Stock'
+                                        : 'Add to Cart'}
                             </button>
                             <Link
                                 to={`/books/${book.id}`}

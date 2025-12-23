@@ -14,6 +14,8 @@ import Home from './pages/Home';
 // Customer Pages
 import Books from './pages/customer/Books';
 import BookDetail from './pages/customer/BookDetail';
+import Cart from './pages/customer/Cart';
+import Wishlist from './pages/customer/Wishlist';
 
 import './App.css';
 
@@ -35,7 +37,7 @@ function App() {
                                     {/* Public Home */}
                                     <Route path="/" element={<Home />} />
 
-                                    {/* Books - All authenticated users */}
+                                    {/* Books - All authenticated users can view */}
                                     <Route
                                         path="/books"
                                         element={
@@ -71,10 +73,7 @@ function App() {
                                         path="/cart"
                                         element={
                                             <ProtectedRoute allowedRoles={['Customer']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">🛒 Shopping Cart</h1>
-                                                    <p className="text-gray-600">Coming in Day 10!</p>
-                                                </div>
+                                                <Cart />
                                             </ProtectedRoute>
                                         }
                                     />
@@ -82,10 +81,7 @@ function App() {
                                         path="/wishlist"
                                         element={
                                             <ProtectedRoute allowedRoles={['Customer']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">❤️ My Wishlist</h1>
-                                                    <p className="text-gray-600">Coming in Day 10!</p>
-                                                </div>
+                                                <Wishlist />
                                             </ProtectedRoute>
                                         }
                                     />
@@ -96,6 +92,17 @@ function App() {
                                                 <div className="container mx-auto px-4 py-8">
                                                     <h1 className="text-3xl font-bold mb-4">📦 Order History</h1>
                                                     <p className="text-gray-600">Coming in Day 12!</p>
+                                                </div>
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="/checkout"
+                                        element={
+                                            <ProtectedRoute allowedRoles={['Customer']}>
+                                                <div className="container mx-auto px-4 py-8">
+                                                    <h1 className="text-3xl font-bold mb-4">💳 Checkout</h1>
+                                                    <p className="text-gray-600">Coming in Day 11!</p>
                                                 </div>
                                             </ProtectedRoute>
                                         }

@@ -2,6 +2,8 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import bookService from '../../services/bookService';
+import cartService from '../../services/cartService';
+import wishlistService from '../../services/wishlistService';
 
 const BookDetail = () => {
     const { id } = useParams();
@@ -12,10 +14,16 @@ const BookDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [quantity, setQuantity] = useState(1);
+    const [isInWishlist, setIsInWishlist] = useState(false);
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
+    const [isTogglingWishlist, setIsTogglingWishlist] = useState(false);
 
     useEffect(() => {
         fetchBookDetails();
-    }, [id]);
+        if (isAuthenticated && user?.role === 'Customer') {
+            checkWishlistStatus();
+        }
+    }, [id, isAuthenticated]);
 
     const fetchBookDetails = async () => {
         setLoading(true);
@@ -31,16 +39,50 @@ const BookDetail = () => {
         }
     };
 
-    const handleAddToCart = () => {
-        // TODO: Implement add to cart (Day 10)
-        console.log('Add to cart:', { bookId: book.id, quantity });
-        alert(`Added ${quantity} x "${book.title}" to cart (Coming in Day 10!)`);
+    const checkWishlistStatus = async () => {
+        try {
+            const result = await wishlistService.checkInWishlist(id);
+            setIsInWishlist(result === true || result?.isInWishlist === true);
+        } catch (err) {
+            console.error('Error checking wishlist:', err);
+        }
     };
 
-    const handleAddToWishlist = () => {
-        // TODO: Implement add to wishlist (Day 10)
-        console.log('Add to wishlist:', book.id);
-        alert(`"${book.title}" added to wishlist (Coming in Day 10!)`);
+    const handleAddToCart = async () => {
+        if (!isAuthenticated || user?.role !== 'Customer') return;
+
+        setIsAddingToCart(true);
+        try {
+            await cartService.addToCart(book.id, quantity);
+            alert(`Added ${quantity} x "${book.title}" to cart!`);
+        } catch (err) {
+            alert('Failed to add to cart. Please try again.');
+            console.error('Error adding to cart:', err);
+        } finally {
+            setIsAddingToCart(false);
+        }
+    };
+
+    const handleToggleWishlist = async () => {
+        if (!isAuthenticated || user?.role !== 'Customer') return;
+
+        setIsTogglingWishlist(true);
+        try {
+            if (isInWishlist) {
+                await wishlistService.removeFromWishlist(book.id);
+                setIsInWishlist(false);
+                alert(`"${book.title}" removed from wishlist`);
+            } else {
+                await wishlistService.addToWishlist(book.id);
+                setIsInWishlist(true);
+                alert(`"${book.title}" added to wishlist!`);
+            }
+        } catch (err) {
+            alert('Failed to update wishlist. Please try again.');
+            console.error('Error toggling wishlist:', err);
+        } finally {
+            setIsTogglingWishlist(false);
+        }
     };
 
     if (loading) {
@@ -217,20 +259,32 @@ const BookDetail = () => {
                                     <div className="flex gap-3">
                                         <button
                                             onClick={handleAddToCart}
-                                            disabled={book.stockQuantity === 0}
+                                            disabled={book.stockQuantity === 0 || isAddingToCart}
                                             className={`flex-1 py-3 px-6 rounded-lg font-semibold transition ${book.stockQuantity === 0
                                                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                                                    : isAddingToCart
+                                                        ? 'bg-gray-400 text-white cursor-not-allowed'
+                                                        : 'bg-blue-600 text-white hover:bg-blue-700'
                                                 }`}
                                         >
-                                            {book.stockQuantity === 0 ? 'Out of Stock' : '🛒 Add to Cart'}
+                                            {isAddingToCart
+                                                ? 'Adding...'
+                                                : book.stockQuantity === 0
+                                                    ? 'Out of Stock'
+                                                    : '🛒 Add to Cart'}
                                         </button>
                                         <button
-                                            onClick={handleAddToWishlist}
-                                            className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-semibold"
-                                            title="Add to Wishlist"
+                                            onClick={handleToggleWishlist}
+                                            disabled={isTogglingWishlist}
+                                            className={`px-6 py-3 rounded-lg font-semibold transition ${isTogglingWishlist
+                                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                                    : isInWishlist
+                                                        ? 'bg-red-100 text-red-600 hover:bg-red-200'
+                                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                                }`}
+                                            title={isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
                                         >
-                                            ❤️
+                                            {isTogglingWishlist ? '⏳' : isInWishlist ? '❤️' : '🤍'}
                                         </button>
                                     </div>
                                 </div>
