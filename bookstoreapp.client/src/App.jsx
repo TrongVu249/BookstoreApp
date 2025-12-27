@@ -17,7 +17,8 @@ import BookDetail from './pages/customer/BookDetail';
 import Cart from './pages/customer/Cart';
 import Wishlist from './pages/customer/Wishlist';
 
-import './App.css';
+///Redundant, constrained max width
+///import './App.css';
 
 function App() {
     return (
