@@ -137,8 +137,8 @@ const Wishlist = () => {
                         >
                             <Link to={`/books/${item.bookId}`} className="relative">
                                 <img
-                                    src={item.book?.imageUrl || `https://via.placeholder.com/200x300/3b82f6/ffffff?text=${encodeURIComponent(item.book?.title || 'Book')}`}
-                                    alt={item.book?.title}
+                                    src={item.bookImageUrl || `https://via.placeholder.com/200x300/3b82f6/ffffff?text=${encodeURIComponent(item.bookTitle || 'Book')}`}
+                                    alt={item.bookTitle}
                                     className="w-full h-64 object-cover"
                                 />
                                 {item.book?.categoryName && (
@@ -151,11 +151,11 @@ const Wishlist = () => {
                             <div className="p-4 flex flex-col flex-grow">
                                 <Link to={`/books/${item.bookId}`}>
                                     <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-2 hover:text-blue-600 transition">
-                                        {item.book?.title || 'Unknown Title'}
+                                        {item.bookTitle || 'Unknown Title'}
                                     </h3>
                                 </Link>
                                 <p className="text-sm text-gray-600 mb-2">
-                                    by {item.book?.author || 'Unknown Author'}
+                                    by {item.bookAuthor || 'Unknown Author'}
                                 </p>
 
                                 {item.book?.isbn && (
@@ -165,15 +165,15 @@ const Wishlist = () => {
                                 <div className="mt-auto">
                                     <div className="mb-3">
                                         <span className="text-2xl font-bold text-blue-600">
-                                            ${(item.book?.price || 0).toFixed(2)}
+                                            ${(item.bookPrice || 0).toFixed(2)}
                                         </span>
                                     </div>
 
                                     <div className="flex gap-2">
                                         <button
-                                            onClick={() => handleAddToCart(item.bookId, item.book?.title)}
-                                            disabled={processingItems.has(item.bookId) || item.book?.stockQuantity === 0}
-                                            className={`flex-1 py-2 px-4 rounded-lg font-medium transition ${item.book?.stockQuantity === 0
+                                            onClick={() => handleAddToCart(item.bookId, item.bookTitle)}
+                                            disabled={processingItems.has(item.bookId) || item.stockQuantity === 0}
+                                            className={`flex-1 py-2 px-4 rounded-lg font-medium transition ${item.stockQuantity === 0
                                                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                                     : processingItems.has(item.bookId)
                                                         ? 'bg-gray-400 text-white cursor-not-allowed'
@@ -182,7 +182,7 @@ const Wishlist = () => {
                                         >
                                             {processingItems.has(item.bookId)
                                                 ? 'Adding...'
-                                                : item.book?.stockQuantity === 0
+                                                : item.stockQuantity === 0
                                                     ? 'Out of Stock'
                                                     : '🛒 Add to Cart'}
                                         </button>
