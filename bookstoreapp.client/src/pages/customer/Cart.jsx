@@ -18,7 +18,7 @@ const Cart = () => {
         setError('');
         try {
             const data = await cartService.getCart();
-            setCartItems(Array.isArray(data) ? data : []);
+            setCartItems(data.items ?? []);
         } catch (err) {
             setError('Failed to load cart. Please try again.');
             console.error('Error fetching cart:', err);
@@ -78,7 +78,7 @@ const Cart = () => {
 
     const calculateTotal = () => {
         return cartItems.reduce((sum, item) => {
-            const price = item.book?.price || 0;
+            const price = item.bookPrice || 0;
             return sum + (price * item.quantity);
         }, 0);
     };
@@ -159,8 +159,8 @@ const Cart = () => {
                                     {/* Book Image */}
                                     <Link to={`/books/${item.bookId}`} className="flex-shrink-0">
                                         <img
-                                            src={item.book?.imageUrl || `https://via.placeholder.com/120x180/3b82f6/ffffff?text=${encodeURIComponent(item.book?.title || 'Book')}`}
-                                            alt={item.book?.title}
+                                            src={item.bookImageUrl || `https://via.placeholder.com/120x180/3b82f6/ffffff?text=${encodeURIComponent(item.bookTitle || 'Book')}`}
+                                            alt={item.bookTitle}
                                             className="w-24 h-36 object-cover rounded"
                                         />
                                     </Link>
@@ -171,13 +171,13 @@ const Cart = () => {
                                             to={`/books/${item.bookId}`}
                                             className="text-lg font-bold text-gray-900 hover:text-blue-600 transition"
                                         >
-                                            {item.book?.title || 'Unknown Title'}
+                                            {item.bookTitle || 'Unknown Title'}
                                         </Link>
                                         <p className="text-sm text-gray-600 mt-1">
-                                            by {item.book?.author || 'Unknown Author'}
+                                            by {item.bookAuthor || 'Unknown Author'}
                                         </p>
                                         <p className="text-lg font-semibold text-blue-600 mt-2">
-                                            ${(item.book?.price || 0).toFixed(2)}
+                                            ${(item.bookPrice || 0).toFixed(2)}
                                         </p>
 
                                         {/* Quantity Controls */}
@@ -215,7 +215,7 @@ const Cart = () => {
                                     <div className="text-right">
                                         <p className="text-sm text-gray-600">Subtotal</p>
                                         <p className="text-xl font-bold text-gray-900">
-                                            ${((item.book?.price || 0) * item.quantity).toFixed(2)}
+                                            ${((item.bookPrice || 0) * item.quantity).toFixed(2)}
                                         </p>
                                     </div>
                                 </div>
