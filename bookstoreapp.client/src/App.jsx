@@ -16,6 +16,8 @@ import Books from './pages/customer/Books';
 import BookDetail from './pages/customer/BookDetail';
 import Cart from './pages/customer/Cart';
 import Wishlist from './pages/customer/Wishlist';
+import Checkout from './pages/customer/Checkout';
+import OrderConfirmation from './pages/customer/OrderConfirmation';
 
 ///Redundant, constrained max width
 ///import './App.css';
@@ -87,6 +89,22 @@ function App() {
                                         }
                                     />
                                     <Route
+                                        path="/checkout"
+                                        element={
+                                            <ProtectedRoute allowedRoles={['Customer']}>
+                                                <Checkout />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="/order-confirmation/:orderId"
+                                        element={
+                                            <ProtectedRoute allowedRoles={['Customer']}>
+                                                <OrderConfirmation />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
                                         path="/orders"
                                         element={
                                             <ProtectedRoute allowedRoles={['Customer']}>
@@ -98,12 +116,12 @@ function App() {
                                         }
                                     />
                                     <Route
-                                        path="/checkout"
+                                        path="/orders/:id"
                                         element={
                                             <ProtectedRoute allowedRoles={['Customer']}>
                                                 <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">💳 Checkout</h1>
-                                                    <p className="text-gray-600">Coming in Day 11!</p>
+                                                    <h1 className="text-3xl font-bold mb-4">📦 Order Details</h1>
+                                                    <p className="text-gray-600">Coming in Day 12!</p>
                                                 </div>
                                             </ProtectedRoute>
                                         }
