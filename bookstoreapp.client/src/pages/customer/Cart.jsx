@@ -27,17 +27,17 @@ const Cart = () => {
         }
     };
 
-    const handleUpdateQuantity = async (itemId, newQuantity) => {
+    const handleUpdateQuantity = async (bookId, newQuantity) => {
         if (newQuantity < 1) return;
 
-        setUpdatingItems(prev => new Set(prev).add(itemId));
+        setUpdatingItems(prev => new Set(prev).add(bookId));
         try {
-            await cartService.updateCartItem(itemId, newQuantity);
+            await cartService.updateCartItem(bookId, newQuantity);
 
             // Update local state
             setCartItems(prevItems =>
                 prevItems.map(item =>
-                    item.id === itemId ? { ...item, quantity: newQuantity } : item
+                    item.bookId === bookId ? { ...item, quantity: newQuantity } : item
                 )
             );
         } catch (err) {
@@ -46,7 +46,7 @@ const Cart = () => {
         } finally {
             setUpdatingItems(prev => {
                 const newSet = new Set(prev);
-                newSet.delete(itemId);
+                newSet.delete(bookId);
                 return newSet;
             });
         }
@@ -184,8 +184,8 @@ const Cart = () => {
                                         <div className="flex items-center gap-4 mt-4">
                                             <div className="flex items-center gap-2">
                                                 <button
-                                                    onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                                                    disabled={item.quantity <= 1 || updatingItems.has(item.id)}
+                                                    onClick={() => handleUpdateQuantity(item.bookId, item.quantity - 1)}
+                                                    disabled={item.quantity <= 1 || updatingItems.has(item.bookId)}
                                                     className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
                                                 >
                                                     -
@@ -194,8 +194,8 @@ const Cart = () => {
                                                     {item.quantity}
                                                 </span>
                                                 <button
-                                                    onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                                                    disabled={updatingItems.has(item.id)}
+                                                    onClick={() => handleUpdateQuantity(item.bookId, item.quantity + 1)}
+                                                    disabled={updatingItems.has(item.bookId)}
                                                     className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
                                                 >
                                                     +
