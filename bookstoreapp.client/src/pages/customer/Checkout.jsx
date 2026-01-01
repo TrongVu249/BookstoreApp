@@ -28,11 +28,11 @@ const Checkout = () => {
         setLoading(true);
         try {
             const data = await cartService.getCart();
-            if (!data || data.length === 0) {
+            if (!data || !data.items || data.items.length === 0) {
                 navigate('/cart');
                 return;
             }
-            setCartItems(Array.isArray(data) ? data : []);
+            setCartItems(data.items);
         } catch (err) {
             setError('Failed to load cart. Please try again.');
             console.error('Error fetching cart:', err);
@@ -43,7 +43,7 @@ const Checkout = () => {
 
     const calculateTotal = () => {
         return cartItems.reduce((sum, item) => {
-            const price = item.book?.price || 0;
+            const price = item.bookPrice || 0;
             return sum + (price * item.quantity);
         }, 0);
     };
@@ -302,20 +302,20 @@ const Checkout = () => {
                                     {cartItems.map((item) => (
                                         <div key={item.id} className="flex gap-3">
                                             <img
-                                                src={item.book?.imageUrl || 'https://via.placeholder.com/60x90'}
-                                                alt={item.book?.title}
+                                                src={item.bookImageUrl || 'https://via.placeholder.com/60x90'}
+                                                alt={item.bookTitle}
                                                 className="w-12 h-18 object-cover rounded"
                                             />
                                             <div className="flex-grow">
                                                 <p className="font-semibold text-sm line-clamp-2">
-                                                    {item.book?.title}
+                                                    {item.bookTitle}
                                                 </p>
                                                 <p className="text-xs text-gray-600">
-                                                    Qty: {item.quantity} × ${(item.book?.price || 0).toFixed(2)}
+                                                    Qty: {item.quantity} × ${(item.bookPrice || 0).toFixed(2)}
                                                 </p>
                                             </div>
                                             <p className="font-semibold text-sm">
-                                                ${((item.book?.price || 0) * item.quantity).toFixed(2)}
+                                                ${((item.bookPrice || 0) * item.quantity).toFixed(2)}
                                             </p>
                                         </div>
                                     ))}

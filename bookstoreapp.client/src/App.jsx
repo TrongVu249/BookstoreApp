@@ -1,4 +1,5 @@
-﻿import React from 'react';
+﻿// src/App.jsx
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
@@ -18,6 +19,8 @@ import Cart from './pages/customer/Cart';
 import Wishlist from './pages/customer/Wishlist';
 import Checkout from './pages/customer/Checkout';
 import OrderConfirmation from './pages/customer/OrderConfirmation';
+import OrderHistory from './pages/customer/OrderHistory';
+import OrderDetail from './pages/customer/OrderDetail';
 
 ///Redundant, constrained max width
 ///import './App.css';
@@ -108,10 +111,7 @@ function App() {
                                         path="/orders"
                                         element={
                                             <ProtectedRoute allowedRoles={['Customer']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">📦 Order History</h1>
-                                                    <p className="text-gray-600">Coming in Day 12!</p>
-                                                </div>
+                                                <OrderHistory />
                                             </ProtectedRoute>
                                         }
                                     />
@@ -119,10 +119,7 @@ function App() {
                                         path="/orders/:id"
                                         element={
                                             <ProtectedRoute allowedRoles={['Customer']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">📦 Order Details</h1>
-                                                    <p className="text-gray-600">Coming in Day 12!</p>
-                                                </div>
+                                                <OrderDetail />
                                             </ProtectedRoute>
                                         }
                                     />
