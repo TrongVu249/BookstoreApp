@@ -12,15 +12,18 @@ namespace BookstoreApp.Server.Services.Implementations
         private readonly BookstoreDbContext _context;
         private readonly ICartService _cartService;
         private readonly IPaymentService _paymentService;
+        private readonly IInventoryService _inventoryService; // ADD THIS LINE
 
         public OrderService(
             BookstoreDbContext context,
             ICartService cartService,
-            IPaymentService paymentService)
+            IPaymentService paymentService,
+            IInventoryService inventoryService) // ADD THIS PARAMETER
         {
             _context = context;
             _cartService = cartService;
             _paymentService = paymentService;
+            _inventoryService = inventoryService; // ADD THIS LINE
         }
 
         public async Task<OrderDto> CreateOrderAsync(int userId, CreateOrderDto dto)
@@ -75,11 +78,22 @@ namespace BookstoreApp.Server.Services.Implementations
                 var book = await _context.Books.FindAsync(cartItem.BookId);
                 if (book != null)
                 {
+                    var oldStock = book.StockQuantity;
                     book.StockQuantity -= cartItem.Quantity;
 
                     // Update book status if out of stock
                     if (book.StockQuantity == 0)
                         book.Status = BookStatus.OutOfStock;
+
+                    // ADDED: Log inventory change
+                    await _inventoryService.LogInventoryChangeAsync(
+                        cartItem.BookId,
+                        userId,
+                        -cartItem.Quantity,
+                        book.StockQuantity,
+                        "Order placed",
+                        $"Order #{order.OrderNumber}"
+                    );
                 }
             }
 
@@ -100,7 +114,7 @@ namespace BookstoreApp.Server.Services.Implementations
             {
                 order.Status = OrderStatus.Cancelled;
                 // Restore stock if payment failed
-                await RestoreStockAsync(order.Id);
+                await RestoreStockWithLoggingAsync(order.Id, userId, "Payment failed - stock restored");
             }
 
             await _context.SaveChangesAsync();
@@ -164,11 +178,61 @@ namespace BookstoreApp.Server.Services.Implementations
             order.Status = OrderStatus.Cancelled;
             order.UpdatedAt = DateTime.UtcNow;
 
-            // Restore stock
-            await RestoreStockAsync(orderId);
+            // Restore stock with logging
+            await RestoreStockWithLoggingAsync(orderId, userId, "Order cancelled by customer");
 
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        // ADDED: New method for admin to get orders with user info
+        public async Task<List<AdminOrderSummaryDto>> GetAllOrdersForAdminAsync(
+            int? status = null,
+            int? userId = null,
+            DateTime? dateFrom = null,
+            DateTime? dateTo = null,
+            string? search = null)
+        {
+            var query = _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.OrderItems)
+                .Include(o => o.Payment)
+                .AsQueryable();
+
+            if (status.HasValue)
+                query = query.Where(o => (int)o.Status == status.Value);
+
+            if (userId.HasValue)
+                query = query.Where(o => o.UserId == userId.Value);
+
+            if (dateFrom.HasValue)
+                query = query.Where(o => o.OrderDate >= dateFrom.Value);
+
+            if (dateTo.HasValue)
+                query = query.Where(o => o.OrderDate <= dateTo.Value);
+
+            if (!string.IsNullOrWhiteSpace(search))
+                query = query.Where(o => o.OrderNumber.Contains(search)
+                    || (o.User != null && o.User.UserName.Contains(search)));
+
+            var orders = await query
+                .OrderByDescending(o => o.OrderDate)
+                .ToListAsync();
+
+            return orders.Select(o => new AdminOrderSummaryDto
+            {
+                Id = o.Id,
+                UserId = o.UserId,
+                UserName = o.User?.UserName ?? "",
+                UserEmail = o.User?.Email ?? "",
+                OrderNumber = o.OrderNumber,
+                TotalAmount = o.TotalAmount,
+                Status = o.Status.ToString(),
+                OrderDate = o.OrderDate,
+                ItemCount = o.OrderItems.Sum(oi => oi.Quantity),
+                PaymentMethod = o.Payment?.PaymentMethod,
+                PaymentStatus = o.Payment?.Status.ToString()
+            }).ToList();
         }
 
         public async Task<List<OrderDto>> GetAllOrdersAsync(int? status = null, int? userId = null)
@@ -241,6 +305,71 @@ namespace BookstoreApp.Server.Services.Implementations
             return true;
         }
 
+        // ADDED: New method for admin to cancel any order
+        public async Task<bool> CancelOrderByAdminAsync(int orderId)
+        {
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
+
+            if (order == null)
+                throw new KeyNotFoundException("Order not found");
+
+            // Admin can cancel any order except Delivered
+            if (order.Status == OrderStatus.Delivered)
+                throw new InvalidOperationException("Cannot cancel delivered orders");
+
+            order.Status = OrderStatus.Cancelled;
+            order.UpdatedAt = DateTime.UtcNow;
+
+            // Restore stock with logging (use system userId = 1 for admin action)
+            await RestoreStockWithLoggingAsync(orderId, 1, "Order cancelled by admin");
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        // ADDED: New method for order statistics
+        public async Task<OrderStatisticsDto> GetOrderStatisticsAsync()
+        {
+            var now = DateTime.UtcNow;
+            var startOfMonth = new DateTime(now.Year, now.Month, 1);
+            var startOfToday = now.Date;
+
+            var stats = new OrderStatisticsDto
+            {
+                TotalOrders = await _context.Orders.CountAsync(),
+                PendingOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.Pending),
+                ProcessingOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.Processing),
+                PackedOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.Packed),
+                ShippedOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.Shipped),
+                DeliveredOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.Delivered),
+                CancelledOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.Cancelled),
+
+                // Revenue: Only count orders with completed payments
+                TotalRevenue = await _context.Orders
+                    .Include(o => o.Payment)
+                    .Where(o => o.Payment != null && o.Payment.Status == PaymentStatus.Completed)
+                    .SumAsync(o => o.TotalAmount),
+
+                RevenueThisMonth = await _context.Orders
+                    .Include(o => o.Payment)
+                    .Where(o => o.OrderDate >= startOfMonth
+                        && o.Payment != null
+                        && o.Payment.Status == PaymentStatus.Completed)
+                    .SumAsync(o => o.TotalAmount),
+
+                RevenueToday = await _context.Orders
+                    .Include(o => o.Payment)
+                    .Where(o => o.OrderDate >= startOfToday
+                        && o.Payment != null
+                        && o.Payment.Status == PaymentStatus.Completed)
+                    .SumAsync(o => o.TotalAmount)
+            };
+
+            return stats;
+        }
+
         // Helper methods
         private async Task<OrderDto> GetOrderDetailsAsync(int orderId)
         {
@@ -256,7 +385,14 @@ namespace BookstoreApp.Server.Services.Implementations
             return MapToOrderDto(order);
         }
 
+        // DEPRECATED: Use RestoreStockWithLoggingAsync instead
         private async Task RestoreStockAsync(int orderId)
+        {
+            await RestoreStockWithLoggingAsync(orderId, 1, "Order cancelled - stock restored");
+        }
+
+        // ADDED: New method with inventory logging
+        private async Task RestoreStockWithLoggingAsync(int orderId, int userId, string reason)
         {
             var orderItems = await _context.OrderItems
                 .Include(oi => oi.Book)
@@ -267,11 +403,22 @@ namespace BookstoreApp.Server.Services.Implementations
             {
                 if (item.Book != null)
                 {
+                    var oldStock = item.Book.StockQuantity;
                     item.Book.StockQuantity += item.Quantity;
 
                     // Update status if was out of stock
                     if (item.Book.Status == BookStatus.OutOfStock && item.Book.StockQuantity > 0)
                         item.Book.Status = BookStatus.Available;
+
+                    // Log inventory change
+                    await _inventoryService.LogInventoryChangeAsync(
+                        item.BookId,
+                        userId,
+                        item.Quantity, // positive change (restoring)
+                        item.Book.StockQuantity,
+                        reason,
+                        $"Order #{orderId} - Restored {item.Quantity} units"
+                    );
                 }
             }
 
