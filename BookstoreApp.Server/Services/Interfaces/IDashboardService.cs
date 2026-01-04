@@ -4,7 +4,7 @@ namespace BookstoreApp.Server.Services.Interfaces
 {
     public interface IDashboardService
     {
-        Task<DashboardDto> GetDashboardDataAsync();
         Task<DashboardStatistics> GetStatisticsAsync();
+        //Task<DashboardDto> GetDashboardDataAsync();
     }
 }

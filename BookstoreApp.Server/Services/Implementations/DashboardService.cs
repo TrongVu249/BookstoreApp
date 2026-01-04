@@ -17,20 +17,6 @@ namespace BookstoreApp.Server.Services.Implementations
             _context = context;
         }
 
-        public async Task<DashboardDto> GetDashboardDataAsync()
-        {
-            var dashboard = new DashboardDto
-            {
-                Statistics = await GetStatisticsAsync(),
-                OrdersByStatus = await GetOrdersByStatusAsync(),
-                RecentOrders = await GetRecentOrdersAsync(10),
-                LowStockBooks = await GetLowStockBooksAsync(5),
-                RevenueChart = await GetRevenueChartDataAsync()
-            };
-
-            return dashboard;
-        }
-
         public async Task<DashboardStatistics> GetStatisticsAsync()
         {
             var now = DateTime.UtcNow;
@@ -93,6 +79,22 @@ namespace BookstoreApp.Server.Services.Implementations
                 RevenueToday = revenueToday,
                 AverageOrderValue = averageOrderValue
             };
+        }
+
+        // The following methods are commented out for now but can be implemented as needed.
+        /*
+        public async Task<DashboardDto> GetDashboardDataAsync()
+        {
+            var dashboard = new DashboardDto
+            {
+                Statistics = await GetStatisticsAsync(),
+                OrdersByStatus = await GetOrdersByStatusAsync(),
+                RecentOrders = await GetRecentOrdersAsync(10),
+                LowStockBooks = await GetLowStockBooksAsync(5),
+                RevenueChart = await GetRevenueChartDataAsync()
+            };
+
+            return dashboard;
         }
 
         private async Task<Dictionary<string, int>> GetOrdersByStatusAsync()
@@ -194,5 +196,6 @@ namespace BookstoreApp.Server.Services.Implementations
                 Last7Days = dailyRevenue
             };
         }
+        */
     }
 }
