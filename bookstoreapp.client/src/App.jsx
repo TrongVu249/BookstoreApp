@@ -22,8 +22,8 @@ import OrderConfirmation from './pages/customer/OrderConfirmation';
 import OrderHistory from './pages/customer/OrderHistory';
 import OrderDetail from './pages/customer/OrderDetail';
 
-///Redundant, constrained max width
-///import './App.css';
+// Admin Pages
+import Dashboard from './pages/admin/Dashboard';
 
 function App() {
     return (
@@ -33,6 +33,60 @@ function App() {
                     {/* Auth Routes - No Layout */}
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+
+                    {/* Admin Routes - No Layout */}
+                    <Route
+                        path="/admin/dashboard"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <Dashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/books"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <div className="container mx-auto px-4 py-8">
+                                    <h1 className="text-3xl font-bold mb-4">📚 Manage Books</h1>
+                                    <p className="text-gray-600">Coming in Day 15!</p>
+                                </div>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/users"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <div className="container mx-auto px-4 py-8">
+                                    <h1 className="text-3xl font-bold mb-4">👥 Manage Users</h1>
+                                    <p className="text-gray-600">Coming in Day 16!</p>
+                                </div>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/orders"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <div className="container mx-auto px-4 py-8">
+                                    <h1 className="text-3xl font-bold mb-4">📦 Manage Orders</h1>
+                                    <p className="text-gray-600">Coming in Day 17!</p>
+                                </div>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/categories"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <div className="container mx-auto px-4 py-8">
+                                    <h1 className="text-3xl font-bold mb-4">🏷️ Manage Categories</h1>
+                                    <p className="text-gray-600">Coming in Day 16!</p>
+                                </div>
+                            </ProtectedRoute>
+                        }
+                    />
 
                     {/* All Other Routes - With Layout */}
                     <Route
@@ -143,52 +197,6 @@ function App() {
                                                 <div className="container mx-auto px-4 py-8">
                                                     <h1 className="text-3xl font-bold mb-4">📋 Update Inventory</h1>
                                                     <p className="text-gray-600">Coming in Day 18!</p>
-                                                </div>
-                                            </ProtectedRoute>
-                                        }
-                                    />
-
-                                    {/* Admin Routes */}
-                                    <Route
-                                        path="/admin/dashboard"
-                                        element={
-                                            <ProtectedRoute allowedRoles={['Admin']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">📊 Admin Dashboard</h1>
-                                                    <p className="text-gray-600">Coming in Day 14!</p>
-                                                </div>
-                                            </ProtectedRoute>
-                                        }
-                                    />
-                                    <Route
-                                        path="/admin/books"
-                                        element={
-                                            <ProtectedRoute allowedRoles={['Admin']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">📚 Manage Books</h1>
-                                                    <p className="text-gray-600">Coming in Day 15!</p>
-                                                </div>
-                                            </ProtectedRoute>
-                                        }
-                                    />
-                                    <Route
-                                        path="/admin/users"
-                                        element={
-                                            <ProtectedRoute allowedRoles={['Admin']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">👥 Manage Users</h1>
-                                                    <p className="text-gray-600">Coming in Day 16!</p>
-                                                </div>
-                                            </ProtectedRoute>
-                                        }
-                                    />
-                                    <Route
-                                        path="/admin/orders"
-                                        element={
-                                            <ProtectedRoute allowedRoles={['Admin']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">📦 Manage Orders</h1>
-                                                    <p className="text-gray-600">Coming in Day 17!</p>
                                                 </div>
                                             </ProtectedRoute>
                                         }
