@@ -1,4 +1,4 @@
-﻿// src/App.jsx
+﻿// src/App.jsx 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
@@ -24,6 +24,9 @@ import OrderDetail from './pages/customer/OrderDetail';
 
 // Admin Pages
 import Dashboard from './pages/admin/Dashboard';
+import BooksManagement from './pages/admin/BooksManagement';
+import AddBook from './pages/admin/AddBook';
+import EditBook from './pages/admin/EditBook';
 
 function App() {
     return (
@@ -47,10 +50,23 @@ function App() {
                         path="/admin/books"
                         element={
                             <ProtectedRoute allowedRoles={['Admin']}>
-                                <div className="container mx-auto px-4 py-8">
-                                    <h1 className="text-3xl font-bold mb-4">📚 Manage Books</h1>
-                                    <p className="text-gray-600">Coming in Day 15!</p>
-                                </div>
+                                <BooksManagement />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/books/add"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <AddBook />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/books/edit/:id"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <EditBook />
                             </ProtectedRoute>
                         }
                     />

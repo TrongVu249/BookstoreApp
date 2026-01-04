@@ -1,32 +1,43 @@
 import api from './api';
 
 const adminService = {
-
     // Get statistics
     getStatistics: async () => {
         const response = await api.get('/admin/dashboard/statistics');
         return response.data;
     },
 
-    /*
+
     // Books Management
-    getAllBooks: async () => {
-        const response = await api.get('/api/books');
+    getAllBooks: async (searchParams = {}) => {
+        const response = await api.get('/admin/books', { params: searchParams });
+        return response.data;
+    },
+
+    getBook: async (id) => {
+        const response = await api.get(`/admin/books/${id}`);
         return response.data;
     },
 
     createBook: async (bookData) => {
-        const response = await api.post('/api/books', bookData);
+        const response = await api.post('/admin/books', bookData);
         return response.data;
     },
 
     updateBook: async (id, bookData) => {
-        const response = await api.put(`/api/books/${id}`, bookData);
+        const response = await api.put(`/admin/books/${id}`, bookData);
         return response.data;
     },
 
     deleteBook: async (id) => {
-        const response = await api.delete(`/api/books/${id}`);
+        const response = await api.delete(`/admin/books/${id}`);
+        return response.data;
+    },
+
+    updateBookStock: async (id, quantity) => {
+        const response = await api.patch(`/admin/books/${id}/stock`, quantity, {
+            headers: { 'Content-Type': 'application/json' }
+        });
         return response.data;
     },
 
@@ -59,7 +70,7 @@ const adminService = {
 
     // Categories Management
     getAllCategories: async () => {
-        const response = await api.get('/api/categories');
+        const response = await api.get('/admin/categories');
         return response.data;
     },
 
@@ -77,7 +88,6 @@ const adminService = {
         const response = await api.delete(`/api/categories/${id}`);
         return response.data;
     },
-    */
 };
 
 export default adminService;
