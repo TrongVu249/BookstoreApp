@@ -92,6 +92,10 @@ const EditBook = () => {
         if (!formData.stockQuantity || parseInt(formData.stockQuantity) < 0) {
             newErrors.stockQuantity = 'Valid stock quantity is required';
         }
+        if (!formData.pageCount || Number(formData.pageCount) < 1) {
+            newErrors.pageCount = 'Page count must be at least 1';
+        }
+
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -108,14 +112,24 @@ const EditBook = () => {
 
         try {
             const bookData = {
-                ...formData,
+                isbn: formData.isbn.trim(),
+                title: formData.title.trim(),
+                author: formData.author.trim(),
+
+                description: formData.description?.trim() || null,
+                imageUrl: formData.imageUrl?.trim() || null,
+                publisher: formData.publisher?.trim() || null,
+                language: formData.language?.trim() || null,
+
                 price: parseFloat(formData.price),
-                stockQuantity: parseInt(formData.stockQuantity),
-                pageCount: formData.pageCount ? parseInt(formData.pageCount) : null,
-                categoryId: parseInt(formData.categoryId),
-                status: parseInt(formData.status),
-                publishDate: formData.publishDate || null,
+                stockQuantity: parseInt(formData.stockQuantity, 10),
+                pageCount: parseInt(formData.pageCount, 10),
+                categoryId: parseInt(formData.categoryId, 10),
+                status: parseInt(formData.status, 10),
+                publishDate: formData.publishDate || null
             };
+
+            console.log('UPDATE BOOK PAYLOAD', bookData);
 
             await adminService.updateBook(id, bookData);
             alert('✅ Book updated successfully!');
