@@ -120,11 +120,11 @@ const EditBook = () => {
                 isbn: formData.isbn.trim(),
                 title: formData.title.trim(),
                 author: formData.author.trim(),
+                language: formData.language?.trim(),
 
                 description: formData.description?.trim() || null,
                 imageUrl: formData.imageUrl?.trim() || null,
                 publisher: formData.publisher?.trim() || null,
-                language: formData.language?.trim() || null,
 
                 price: parseFloat(formData.price),
                 stockQuantity: parseInt(formData.stockQuantity, 10),
