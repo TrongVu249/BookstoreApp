@@ -53,7 +53,12 @@ const EditBook = () => {
                 pageCount: bookData.pageCount?.toString() || '',
                 language: bookData.language || '',
                 categoryId: bookData.categoryId.toString(),
-                status: bookData.status.toString(),
+                status:
+                    bookData.status === "Available" ? "0"
+                        : bookData.status === "OutOfStock" ? "1"
+                            : bookData.status === "Discontinued" ? "2"
+                                : bookData.status === "ComingSoon" ? "3"
+                                    : "0",
             });
 
             setCategories(categoriesData.filter(cat => cat.isActive));
