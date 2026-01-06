@@ -125,10 +125,10 @@ const BooksManagement = () => {
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="">All Status</option>
-                                <option value="0">Available</option>
-                                <option value="1">Out of Stock</option>
-                                <option value="2">Discontinued</option>
-                                <option value="3">Coming Soon</option>
+                                <option value="Available">Available</option>
+                                <option value="OutOfStock">Out of Stock</option>
+                                <option value="Discontinued">Discontinued</option>
+                                <option value="Coming Soon">Coming Soon</option>
                             </select>
                         </div>
                     </div>
