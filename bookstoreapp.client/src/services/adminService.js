@@ -7,7 +7,6 @@ const adminService = {
         return response.data;
     },
 
-
     // Books Management
     getAllBooks: async (searchParams = {}) => {
         const response = await api.get('/admin/books', { params: searchParams });
@@ -42,50 +41,77 @@ const adminService = {
     },
 
     // Users Management
-    getAllUsers: async () => {
-        const response = await api.get('/api/users');
+    getAllUsers: async (searchParams = {}) => {
+        const response = await api.get('/admin/users', { params: searchParams });
+        return response.data;
+    },
+
+    getUser: async (id) => {
+        const response = await api.get(`/admin/users/${id}`);
+        return response.data;
+    },
+
+    createUser: async (userData) => {
+        const response = await api.post('/admin/users', userData);
         return response.data;
     },
 
     updateUser: async (id, userData) => {
-        const response = await api.put(`/api/users/${id}`, userData);
+        const response = await api.put(`/admin/users/${id}`, userData);
         return response.data;
     },
 
     toggleUserStatus: async (id) => {
-        const response = await api.put(`/api/users/${id}/toggle-status`);
+        const response = await api.patch(`/admin/users/${id}/toggle-active`);
+        return response.data;
+    },
+
+    assignRole: async (id, role) => {
+        const response = await api.patch(`/admin/users/${id}/assign-role`, role, {
+            headers: { 'Content-Type': 'application/json' }
+        });
         return response.data;
     },
 
     // Orders Management
     getAllOrders: async () => {
-        const response = await api.get('/api/orders/all');
+        const response = await api.get('/orders/all');
         return response.data;
     },
 
     updateOrderStatus: async (id, status) => {
-        const response = await api.put(`/api/orders/${id}/status`, { status });
+        const response = await api.put(`/orders/${id}/status`, { status });
         return response.data;
     },
 
     // Categories Management
-    getAllCategories: async () => {
-        const response = await api.get('/admin/categories');
+    getAllCategories: async (searchParams = {}) => {
+        const response = await api.get('/admin/categories', { params: searchParams });
+        return response.data;
+    },
+
+    getCategory: async (id) => {
+        const response = await api.get(`/admin/categories/${id}`);
         return response.data;
     },
 
     createCategory: async (categoryData) => {
-        const response = await api.post('/api/categories', categoryData);
+        const response = await api.post('/admin/categories', categoryData);
         return response.data;
     },
 
     updateCategory: async (id, categoryData) => {
-        const response = await api.put(`/api/categories/${id}`, categoryData);
+        const response = await api.put(`/admin/categories/${id}`, categoryData);
         return response.data;
     },
 
     deleteCategory: async (id) => {
-        const response = await api.delete(`/api/categories/${id}`);
+        const response = await api.delete(`/admin/categories/${id}`);
+        return response.data;
+    },
+
+    toggleCategoryStatus: async (id) => {
+        const response = await api.patch(`/admin/categories/${id}/toggle-status`);
         return response.data;
     },
 };

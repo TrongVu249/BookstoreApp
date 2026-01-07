@@ -1,4 +1,4 @@
-﻿// src/App.jsx 
+﻿// src/App.jsx - Updated for Day 16
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
@@ -27,6 +27,12 @@ import Dashboard from './pages/admin/Dashboard';
 import BooksManagement from './pages/admin/BooksManagement';
 import AddBook from './pages/admin/AddBook';
 import EditBook from './pages/admin/EditBook';
+import UsersManagement from './pages/admin/UsersManagement';
+import AddUser from './pages/admin/AddUser';
+import EditUser from './pages/admin/EditUser';
+import CategoriesManagement from './pages/admin/CategoriesManagement';
+import AddCategory from './pages/admin/AddCategory';
+import EditCategory from './pages/admin/EditCategory';
 
 function App() {
     return (
@@ -46,6 +52,8 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
+
+                    {/* Books Management */}
                     <Route
                         path="/admin/books"
                         element={
@@ -70,17 +78,60 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
+
+                    {/* Users Management */}
                     <Route
                         path="/admin/users"
                         element={
                             <ProtectedRoute allowedRoles={['Admin']}>
-                                <div className="container mx-auto px-4 py-8">
-                                    <h1 className="text-3xl font-bold mb-4">👥 Manage Users</h1>
-                                    <p className="text-gray-600">Coming in Day 16!</p>
-                                </div>
+                                <UsersManagement />
                             </ProtectedRoute>
                         }
                     />
+                    <Route
+                        path="/admin/users/add"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <AddUser />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/users/edit/:id"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <EditUser />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Categories Management */}
+                    <Route
+                        path="/admin/categories"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <CategoriesManagement />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/categories/add"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <AddCategory />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/categories/edit/:id"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <EditCategory />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Orders Management */}
                     <Route
                         path="/admin/orders"
                         element={
@@ -88,17 +139,6 @@ function App() {
                                 <div className="container mx-auto px-4 py-8">
                                     <h1 className="text-3xl font-bold mb-4">📦 Manage Orders</h1>
                                     <p className="text-gray-600">Coming in Day 17!</p>
-                                </div>
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/admin/categories"
-                        element={
-                            <ProtectedRoute allowedRoles={['Admin']}>
-                                <div className="container mx-auto px-4 py-8">
-                                    <h1 className="text-3xl font-bold mb-4">🏷️ Manage Categories</h1>
-                                    <p className="text-gray-600">Coming in Day 16!</p>
                                 </div>
                             </ProtectedRoute>
                         }
