@@ -6,13 +6,16 @@ import adminService from '../../services/adminService';
 
 const BooksManagement = () => {
     const [books, setBooks] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
 
     useEffect(() => {
         fetchBooks();
+        fetchCategories();
     }, []);
 
     const fetchBooks = async () => {
@@ -24,6 +27,20 @@ const BooksManagement = () => {
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to load books');
             console.error('Error fetching books:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchCategories = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const data = await adminService.getAllCategories();
+            setCategories(data);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to load categories');
+            console.error('Error fetching categories:', err);
         } finally {
             setLoading(false);
         }
@@ -66,7 +83,8 @@ const BooksManagement = () => {
             book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
             book.isbn.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = statusFilter === '' || book.status.toString() === statusFilter;
-        return matchesSearch && matchesStatus;
+        const matchesCategory = categoryFilter === '' || book.categoryId === Number(categoryFilter);
+        return matchesSearch && matchesStatus && matchesCategory;
     });
 
     if (loading) {
@@ -117,6 +135,23 @@ const BooksManagement = () => {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
+                                🏷️ Filter by Category
+                            </label>
+                            <select
+                                value={categoryFilter}
+                                onChange={(e) => setCategoryFilter(e.target.value)}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                <option value="">All Category</option>
+                                {categories.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>
+                                        {cat.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
                                 📊 Filter by Status
                             </label>
                             <select
@@ -157,6 +192,9 @@ const BooksManagement = () => {
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         ISBN
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Category
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Price
@@ -202,6 +240,9 @@ const BooksManagement = () => {
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-900">
                                                 {book.isbn}
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-900">
+                                                {book.categoryName || '—'}
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-900 font-medium">
                                                 ${book.price.toFixed(2)}
