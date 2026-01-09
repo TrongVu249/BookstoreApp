@@ -36,10 +36,10 @@ import OrdersManagement from './pages/admin/OrdersManagement';
 import OrderDetailAdmin from './pages/admin/OrderDetailAdmin';
 
 // Staff Pages
-//import StaffDashboard from './pages/staff/StaffDashboard';
-//import OrderFulfillment from './pages/staff/OrderFulfillment';
-//import InventoryManagement from './pages/staff/InventoryManagement';
-//import OrderDetailStaff from './pages/staff/OrderDetailStaff';
+import StaffDashboard from './pages/staff/StaffDashboard';
+import OrderFulfillment from './pages/staff/OrderFulfillment';
+import InventoryManagement from './pages/staff/InventoryManagement';
+import OrderDetailStaff from './pages/staff/OrderDetailStaff';
 
 function App() {
     return (
