@@ -1,5 +1,4 @@
-﻿// src/App.jsx - Updated for Day 16
-import React from 'react';
+﻿import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
@@ -33,6 +32,14 @@ import EditUser from './pages/admin/EditUser';
 import CategoriesManagement from './pages/admin/CategoriesManagement';
 import AddCategory from './pages/admin/AddCategory';
 import EditCategory from './pages/admin/EditCategory';
+import OrdersManagement from './pages/admin/OrdersManagement';
+import OrderDetailAdmin from './pages/admin/OrderDetailAdmin';
+
+// Staff Pages
+//import StaffDashboard from './pages/staff/StaffDashboard';
+//import OrderFulfillment from './pages/staff/OrderFulfillment';
+//import InventoryManagement from './pages/staff/InventoryManagement';
+//import OrderDetailStaff from './pages/staff/OrderDetailStaff';
 
 function App() {
     return (
@@ -136,10 +143,15 @@ function App() {
                         path="/admin/orders"
                         element={
                             <ProtectedRoute allowedRoles={['Admin']}>
-                                <div className="container mx-auto px-4 py-8">
-                                    <h1 className="text-3xl font-bold mb-4">📦 Manage Orders</h1>
-                                    <p className="text-gray-600">Coming in Day 17!</p>
-                                </div>
+                                <OrdersManagement />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/orders/:id"
+                        element={
+                            <ProtectedRoute allowedRoles={['Admin']}>
+                                <OrderDetailAdmin />
                             </ProtectedRoute>
                         }
                     />
@@ -230,30 +242,6 @@ function App() {
                                         element={
                                             <ProtectedRoute allowedRoles={['Customer']}>
                                                 <OrderDetail />
-                                            </ProtectedRoute>
-                                        }
-                                    />
-
-                                    {/* Staff Routes */}
-                                    <Route
-                                        path="/staff/orders"
-                                        element={
-                                            <ProtectedRoute allowedRoles={['Staff']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">📦 Manage Orders</h1>
-                                                    <p className="text-gray-600">Coming in Day 18!</p>
-                                                </div>
-                                            </ProtectedRoute>
-                                        }
-                                    />
-                                    <Route
-                                        path="/staff/inventory"
-                                        element={
-                                            <ProtectedRoute allowedRoles={['Staff']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">📋 Update Inventory</h1>
-                                                    <p className="text-gray-600">Coming in Day 18!</p>
-                                                </div>
                                             </ProtectedRoute>
                                         }
                                     />

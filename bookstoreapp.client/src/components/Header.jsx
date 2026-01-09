@@ -53,9 +53,10 @@ const Header = () => {
                     ...commonItems,
                     { divider: true },
                     { name: 'Dashboard', path: '/admin/dashboard', icon: '📊' },
-                    { name: 'Manage Books', path: '/admin/books', icon: '📚' },
                     { name: 'Manage Users', path: '/admin/users', icon: '👥' },
                     { name: 'Manage Orders', path: '/admin/orders', icon: '📦' },
+                    { name: 'Manage Books', path: '/admin/books', icon: '📚' },
+                    { name: 'Manage Categories', path: '/admin/categories', icon: '🏷️' },
                 ];
             case 'Staff':
                 return [

@@ -74,13 +74,28 @@ const adminService = {
     },
 
     // Orders Management
-    getAllOrders: async () => {
-        const response = await api.get('/orders/all');
+    getAllOrders: async (searchParams = {}) => {
+        const response = await api.get('/admin/orders', { params: searchParams });
+        return response.data;
+    },
+
+    getOrder: async (id) => {
+        const response = await api.get(`/admin/orders/${id}`);
         return response.data;
     },
 
     updateOrderStatus: async (id, status) => {
-        const response = await api.put(`/orders/${id}/status`, { status });
+        const response = await api.put(`/admin/orders/${id}/status`, { status });
+        return response.data;
+    },
+
+    cancelOrder: async (id) => {
+        const response = await api.post(`/admin/orders/${id}/cancel`);
+        return response.data;
+    },
+
+    getOrderStatistics: async () => {
+        const response = await api.get('/admin/orders/statistics');
         return response.data;
     },
 
