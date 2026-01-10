@@ -85,7 +85,7 @@ namespace BookstoreApp.Server.Services.Implementations
                     if (book.StockQuantity == 0)
                         book.Status = BookStatus.OutOfStock;
 
-                    // ADDED: Log inventory change
+                    // Log inventory change
                     await _inventoryService.LogInventoryChangeAsync(
                         cartItem.BookId,
                         userId,
@@ -185,7 +185,8 @@ namespace BookstoreApp.Server.Services.Implementations
             return true;
         }
 
-        // ADDED: New method for admin to get orders with user info
+        //// ADMIN Services below
+        // New method for admin to get orders with user info
         public async Task<List<AdminOrderSummaryDto>> GetAllOrdersForAdminAsync(
             int? status = null,
             int? userId = null,
@@ -305,7 +306,7 @@ namespace BookstoreApp.Server.Services.Implementations
             return true;
         }
 
-        // ADDED: New method for admin to cancel any order
+        // Cancel any order (Admin)
         public async Task<bool> CancelOrderByAdminAsync(int orderId)
         {
             var order = await _context.Orders
@@ -329,7 +330,7 @@ namespace BookstoreApp.Server.Services.Implementations
             return true;
         }
 
-        // ADDED: New method for order statistics
+        // Order statistics
         public async Task<OrderStatisticsDto> GetOrderStatisticsAsync()
         {
             var now = DateTime.UtcNow;
@@ -385,13 +386,15 @@ namespace BookstoreApp.Server.Services.Implementations
             return MapToOrderDto(order);
         }
 
-        // DEPRECATED: Use RestoreStockWithLoggingAsync instead
+        //Use RestoreStockWithLoggingAsync instead
+        /*
         private async Task RestoreStockAsync(int orderId)
         {
             await RestoreStockWithLoggingAsync(orderId, 1, "Order cancelled - stock restored");
         }
+        */
 
-        // ADDED: New method with inventory logging
+        // Restore Stock with inventory logging
         private async Task RestoreStockWithLoggingAsync(int orderId, int userId, string reason)
         {
             var orderItems = await _context.OrderItems
