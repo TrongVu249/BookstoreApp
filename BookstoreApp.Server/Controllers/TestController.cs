@@ -16,6 +16,7 @@ namespace BookstoreApp.Server.Controllers
             _context = context;
         }
 
+        /*
         [HttpGet("status")]
         public async Task<ActionResult> GetStatus()
         {
@@ -41,7 +42,9 @@ namespace BookstoreApp.Server.Controllers
                 });
             }
         }
+        */
 
+        /*
         [HttpGet("categories")]
         public async Task<ActionResult> GetCategories()
         {
@@ -57,7 +60,10 @@ namespace BookstoreApp.Server.Controllers
 
             return Ok(categories);
         }
+        */
 
+
+        /*
         [HttpGet("books")]
         public async Task<ActionResult> GetBooks()
         {
@@ -76,7 +82,9 @@ namespace BookstoreApp.Server.Controllers
 
             return Ok(books);
         }
+        */
 
+        /*
         [HttpGet("admin")]
         public async Task<ActionResult> GetAdmin()
         {
@@ -96,5 +104,6 @@ namespace BookstoreApp.Server.Controllers
 
             return Ok(admin);
         }
+        */
     }
 }
