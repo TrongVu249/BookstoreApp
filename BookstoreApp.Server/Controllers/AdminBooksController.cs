@@ -20,6 +20,7 @@ namespace BookstoreApp.Server.Controllers
 
         // Get all books (including all statuses)
         [HttpGet]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<List<BookDto>>> GetAllBooks([FromQuery] BookSearchDto searchDto)
         {
             var books = await _bookService.GetAllBooksAsync(searchDto);
@@ -28,6 +29,7 @@ namespace BookstoreApp.Server.Controllers
 
         // Get book by ID
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<BookDto>> GetBook(int id)
         {
             try
