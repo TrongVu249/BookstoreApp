@@ -181,7 +181,7 @@ function App() {
                         }
                     />
 
-                    {/* Order Detail for Staff */} }
+                    {/* Order Detail for Staff */}
                     <Route
                         path="/staff/orderdetail"
                         element={
