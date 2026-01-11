@@ -21,6 +21,9 @@ import OrderConfirmation from './pages/customer/OrderConfirmation';
 import OrderHistory from './pages/customer/OrderHistory';
 import OrderDetail from './pages/customer/OrderDetail';
 
+// Common Pages (Profile)
+import Profile from './pages/Profile';
+
 // Admin Pages
 import Dashboard from './pages/admin/Dashboard';
 import BooksManagement from './pages/admin/BooksManagement';
@@ -50,7 +53,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
 
-                    {/* Admin Routes below - No Layout */}
+                    {/* Admin Routes - No Layout */}
                     {/* Admin Dashboard */}
                     <Route
                         path="/admin/dashboard"
@@ -230,10 +233,7 @@ function App() {
                                         path="/profile"
                                         element={
                                             <ProtectedRoute allowedRoles={['Customer', 'Staff', 'Admin']}>
-                                                <div className="container mx-auto px-4 py-8">
-                                                    <h1 className="text-3xl font-bold mb-4">👤 My Profile</h1>
-                                                    <p className="text-gray-600">Coming in Day 21!</p>
-                                                </div>
+                                                <Profile />
                                             </ProtectedRoute>
                                         }
                                     />
