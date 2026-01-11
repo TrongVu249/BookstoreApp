@@ -62,8 +62,9 @@ const Header = () => {
                 return [
                     ...commonItems,
                     { divider: true },
-                    { name: 'Manage Orders', path: '/staff/orders', icon: '📦' },
-                    { name: 'Update Inventory', path: '/staff/inventory', icon: '📋' },
+                    { name: 'Dashboard', path: '/staff/dashboard', icon: '📊' },
+                    { name: 'Order Fulfillment', path: '/staff/orders', icon: '📦' },
+                    { name: 'Inventory Management', path: '/staff/inventory', icon: '📋' },
                 ];
             case 'Customer':
             default:

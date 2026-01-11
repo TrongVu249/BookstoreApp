@@ -50,7 +50,8 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
 
-                    {/* Admin Routes - No Layout */}
+                    {/* Admin Routes below - No Layout */}
+                    {/* Admin Dashboard */}
                     <Route
                         path="/admin/dashboard"
                         element={
@@ -152,6 +153,47 @@ function App() {
                         element={
                             <ProtectedRoute allowedRoles={['Admin']}>
                                 <OrderDetailAdmin />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Staff Routes below - No Layout */}
+                    {/* Staff Dashboard */}
+                    <Route
+                        path="/staff/dashboard"
+                        element={
+                            <ProtectedRoute allowedRoles={['Staff']}>
+                                <StaffDashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Order Fulfillment */}
+                    <Route
+                        path="/staff/orders"
+                        element={
+                            <ProtectedRoute allowedRoles={['Staff']}>
+                                <OrderFulfillment />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Order Detail for Staff */} }
+                    <Route
+                        path="/staff/orderdetail"
+                        element={
+                            <ProtectedRoute allowedRoles={['Staff']}>
+                                <OrderDetailStaff />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Staff Inventory Management */ }
+                    <Route
+                        path="/staff/inventory"
+                        element={
+                            <ProtectedRoute allowedRoles={['Staff']}>
+                                <InventoryManagement />
                             </ProtectedRoute>
                         }
                     />
