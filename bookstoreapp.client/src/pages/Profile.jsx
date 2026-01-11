@@ -5,7 +5,7 @@ import userService from '../services/userService';
 
 const Profile = () => {
     const { user: authUser } = useAuth();
-    const [activeTab, setActiveTab] = useState('profile');
+    const [activeTab, setActiveTab] = useState('account');
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [profile, setProfile] = useState(null);
@@ -191,14 +191,25 @@ const Profile = () => {
                         {/* Navigation */}
                         <nav className="space-y-2">
                             <button
+                                onClick={() => setActiveTab('account')}
+                                className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${activeTab === 'account'
+                                    ? 'bg-blue-50 text-blue-600 font-medium'
+                                    : 'text-gray-700 hover:bg-gray-50'
+                                    }`}
+                            >
+                                ℹ️ Account Details
+                            </button>
+
+                            <button
                                 onClick={() => setActiveTab('profile')}
                                 className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${activeTab === 'profile'
                                         ? 'bg-blue-50 text-blue-600 font-medium'
                                         : 'text-gray-700 hover:bg-gray-50'
                                     }`}
                             >
-                                👤 Profile Information
+                                👤 Change Profile Information
                             </button>
+
                             <button
                                 onClick={() => setActiveTab('password')}
                                 className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${activeTab === 'password'
@@ -208,24 +219,84 @@ const Profile = () => {
                             >
                                 🔒 Change Password
                             </button>
-                            <button
-                                onClick={() => setActiveTab('account')}
-                                className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${activeTab === 'account'
-                                        ? 'bg-blue-50 text-blue-600 font-medium'
-                                        : 'text-gray-700 hover:bg-gray-50'
-                                    }`}
-                            >
-                                ℹ️ Account Details
-                            </button>
                         </nav>
                     </div>
                 </div>
 
                 {/* Main Content */}
                 <div className="lg:col-span-3">
+                    {activeTab === 'account' && (
+                        <div className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-xl font-bold text-gray-800 mb-6">Account Details</h2>
+                            <div className="space-y-4">
+                                <div className="border-b border-gray-200 pb-4">
+                                    <label className="text-sm font-medium text-gray-600">Username</label>
+                                    <p className="text-gray-900 font-medium">{profile?.userName}</p>
+                                </div>
+                                <div className="border-b border-gray-200 pb-4">
+                                    <label className="text-sm font-medium text-gray-600">Email</label>
+                                    <p className="text-gray-900 font-medium">{profile?.email}</p>
+                                </div>
+                                <div className="border-b border-gray-200 pb-4">
+                                    <label className="text-sm font-medium text-gray-600">Full Name</label>
+                                    <p className="text-gray-900 font-medium">{profile?.fullName}</p>
+                                </div>
+                                <div className="border-b border-gray-200 pb-4">
+                                    <label className="text-sm font-medium text-gray-600">Phone Number</label>
+                                    <p className="text-gray-900 font-medium">{profile?.phoneNumber}</p>
+                                </div>
+                                <div className="border-b border-gray-200 pb-4">
+                                    <label className="text-sm font-medium text-gray-600">Address</label>
+                                    <p className="text-gray-900 font-medium">{profile?.address}</p>
+                                </div>
+                                <div className="border-b border-gray-200 pb-4">
+                                    <label className="text-sm font-medium text-gray-600">Role</label>
+                                    <p className="text-gray-900 font-medium">{profile?.role}</p>
+                                </div>
+                                <div className="border-b border-gray-200 pb-4">
+                                    <label className="text-sm font-medium text-gray-600">Account Status</label>
+                                    <p className="text-gray-900 font-medium">
+                                        {profile?.isActive ? (
+                                            <span className="text-green-600">✓ Active</span>
+                                        ) : (
+                                            <span className="text-red-600">✗ Inactive</span>
+                                        )}
+                                    </p>
+                                </div>
+                                <div className="border-b border-gray-200 pb-4">
+                                    <label className="text-sm font-medium text-gray-600">Member Since</label>
+                                    <p className="text-gray-900 font-medium">
+                                        {new Date(profile?.createdAt).toLocaleDateString('en-US', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
+                                    </p>
+                                </div>
+                                {profile?.updatedAt && (
+                                    <div className="border-b border-gray-200 pb-4">
+                                        <label className="text-sm font-medium text-gray-600">Last Updated</label>
+                                        <p className="text-gray-900 font-medium">
+                                            {new Date(profile?.updatedAt).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            })}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                                <p className="text-sm text-gray-600">
+                                    <strong>Note:</strong> Username and email cannot be changed. If you need to update these, please contact support.
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
                     {activeTab === 'profile' && (
                         <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-bold text-gray-800 mb-6">Profile Information</h2>
+                            <h2 className="text-xl font-bold text-gray-800 mb-6">Change Profile Information</h2>
                             <form onSubmit={handleUpdateProfile} className="space-y-6">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -359,63 +430,6 @@ const Profile = () => {
                                     {saving ? 'Changing Password...' : '🔒 Change Password'}
                                 </button>
                             </form>
-                        </div>
-                    )}
-
-                    {activeTab === 'account' && (
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-bold text-gray-800 mb-6">Account Details</h2>
-                            <div className="space-y-4">
-                                <div className="border-b border-gray-200 pb-4">
-                                    <label className="text-sm font-medium text-gray-600">Username</label>
-                                    <p className="text-gray-900 font-medium">{profile?.userName}</p>
-                                </div>
-                                <div className="border-b border-gray-200 pb-4">
-                                    <label className="text-sm font-medium text-gray-600">Email</label>
-                                    <p className="text-gray-900 font-medium">{profile?.email}</p>
-                                </div>
-                                <div className="border-b border-gray-200 pb-4">
-                                    <label className="text-sm font-medium text-gray-600">Role</label>
-                                    <p className="text-gray-900 font-medium">{profile?.role}</p>
-                                </div>
-                                <div className="border-b border-gray-200 pb-4">
-                                    <label className="text-sm font-medium text-gray-600">Account Status</label>
-                                    <p className="text-gray-900 font-medium">
-                                        {profile?.isActive ? (
-                                            <span className="text-green-600">✓ Active</span>
-                                        ) : (
-                                            <span className="text-red-600">✗ Inactive</span>
-                                        )}
-                                    </p>
-                                </div>
-                                <div className="border-b border-gray-200 pb-4">
-                                    <label className="text-sm font-medium text-gray-600">Member Since</label>
-                                    <p className="text-gray-900 font-medium">
-                                        {new Date(profile?.createdAt).toLocaleDateString('en-US', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric'
-                                        })}
-                                    </p>
-                                </div>
-                                {profile?.updatedAt && (
-                                    <div className="border-b border-gray-200 pb-4">
-                                        <label className="text-sm font-medium text-gray-600">Last Updated</label>
-                                        <p className="text-gray-900 font-medium">
-                                            {new Date(profile?.updatedAt).toLocaleDateString('en-US', {
-                                                year: 'numeric',
-                                                month: 'long',
-                                                day: 'numeric'
-                                            })}
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                                <p className="text-sm text-gray-600">
-                                    <strong>Note:</strong> Username and email cannot be changed. If you need to update these, please contact support.
-                                </p>
-                            </div>
                         </div>
                     )}
                 </div>
