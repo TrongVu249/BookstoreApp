@@ -8,7 +8,7 @@ namespace BookstoreApp.Server.Controllers
 {
     [ApiController]
     [Route("api/admin/books")]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class AdminBooksController : ControllerBase
     {
         private readonly IBookService _bookService;
@@ -45,6 +45,7 @@ namespace BookstoreApp.Server.Controllers
 
         // Create new book
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<BookDto>> CreateBook([FromBody] CreateBookDto dto)
         {
             try
@@ -60,6 +61,7 @@ namespace BookstoreApp.Server.Controllers
 
         // Update book
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateBook(int id, [FromBody] UpdateBookDto dto)
         {
             try
@@ -79,6 +81,7 @@ namespace BookstoreApp.Server.Controllers
 
         // Delete book
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteBook(int id)
         {
             try
@@ -98,6 +101,7 @@ namespace BookstoreApp.Server.Controllers
 
         // Update book stock quantity
         [HttpPatch("{id}/stock")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateStock(int id, [FromBody] int quantity)
         {
             try
