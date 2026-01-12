@@ -33,7 +33,7 @@ const authService = {
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
 
-            return response.data;
+            return { token, user };
         } catch (error) {
             throw error.response?.data || 'Login failed';
         }

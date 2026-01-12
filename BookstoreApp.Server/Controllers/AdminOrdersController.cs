@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookstoreApp.Server.Controllers
 {
-    [Authorize(Roles = "Admin,Staff")]
+    [Authorize(Roles = "Admin, Staff")]
     [ApiController]
     [Route("api/admin/orders")]
     public class AdminOrdersController : ControllerBase
