@@ -145,11 +145,18 @@ const InventoryManagement = () => {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${book.status === 0 ? 'bg-green-100 text-green-800' :
-                                                    book.status === 1 ? 'bg-red-100 text-red-800' :
-                                                        'bg-gray-100 text-gray-800'
+                                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${book.status === 'Available' ? 'bg-green-100 text-green-800' :
+                                                book.status === 'OutOfStock' ? 'bg-red-100 text-red-800' :
+                                                    book.status === 'Discontinued' ? 'bg-blue-100 text-gray-800' :
+                                                        'bg-gray-100 text-blue-800'
                                                 }`}>
-                                                {book.status === 0 ? 'Available' : book.status === 1 ? 'Out of Stock' : 'Discontinued'}
+                                                {book.status === 'Available'
+                                                    ? 'Available'
+                                                    : book.status === 'OutOfStock'
+                                                        ? 'Out of Stock'
+                                                        : book.status === 'Discontinued'
+                                                            ? 'Discontinued'
+                                                            : 'Coming soon'}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
