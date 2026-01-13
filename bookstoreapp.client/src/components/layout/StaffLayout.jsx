@@ -98,7 +98,7 @@ const StaffLayout = ({ children }) => {
                             className="w-full p-2 text-red-500 hover:bg-red-50 rounded-lg"
                             title="Logout"
                         >
-                            🚪
+                            ⏻
                         </button>
                     )}
                 </div>

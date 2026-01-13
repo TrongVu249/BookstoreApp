@@ -195,7 +195,7 @@ const Header = () => {
                                             onClick={handleLogout}
                                             className="w-full text-left flex items-center px-4 py-2 text-red-600 hover:bg-red-50 transition"
                                         >
-                                            <span className="mr-3">🚪</span>
+                                            <span className="mr-3">⏻</span>
                                             Logout
                                         </button>
                                     </div>
@@ -291,7 +291,7 @@ const Header = () => {
                                         onClick={handleLogout}
                                         className="text-left text-red-600 hover:text-red-700 font-medium px-2 py-1 mt-2"
                                     >
-                                        🚪 Logout
+                                        ⏻ Logout
                                     </button>
                                 </>
                             ) : (

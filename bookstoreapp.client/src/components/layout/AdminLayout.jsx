@@ -42,6 +42,10 @@ const AdminLayout = ({ children }) => {
         },
     ];
 
+    const handleHome = () => {
+        navigate('/admin/home');
+    };
+
     const handleLogout = () => {
         logout();
         navigate('/login');
@@ -114,7 +118,7 @@ const AdminLayout = ({ children }) => {
                             className="w-full p-2 text-red-500 hover:bg-red-50 rounded-lg"
                             title="Logout"
                         >
-                            🚪
+                            ⏻
                         </button>
                     )}
                 </div>
