@@ -179,7 +179,7 @@ function App() {
 
                     {/* Order Detail for Staff */}
                     <Route
-                        path="/staff/orderdetail"
+                        path="/staff/orders/:id"
                         element={
                             <ProtectedRoute allowedRoles={['Staff']}>
                                 <OrderDetailStaff />
