@@ -49,7 +49,7 @@ function App() {
         <AuthProvider>
             <Router>
                 <Routes>
-                    {/* Admin Routes - No Layout */}
+                    {/* Admin Routes below - No Layout */}
                     {/* Admin Dashboard */}
                     <Route
                         path="/admin/dashboard"
