@@ -26,6 +26,10 @@ const StaffLayout = ({ children }) => {
         },
     ];
 
+    const handleHome = () => {
+        navigate('/admin/home');
+    };
+
     const handleLogout = () => {
         logout();
         navigate('/login');
@@ -86,6 +90,12 @@ const StaffLayout = ({ children }) => {
                                 <div className="text-xs text-blue-600 font-medium">{user?.role}</div>
                             </div>
                             <button
+                                onClick={handleHome}
+                                className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                            >
+                                Home
+                            </button>
+                            <button
                                 onClick={handleLogout}
                                 className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm"
                             >
@@ -93,13 +103,22 @@ const StaffLayout = ({ children }) => {
                             </button>
                         </div>
                     ) : (
-                        <button
-                            onClick={handleLogout}
-                            className="w-full p-2 text-red-500 hover:bg-red-50 rounded-lg"
-                            title="Logout"
-                        >
-                            ⏻
-                        </button>
+                        <>
+                            <button
+                                onClick={handleHome}
+                                className="w-full p-2 text-blue-500 hover:bg-blue-50 rounded-lg"
+                                title="Home"
+                            >
+                                🏠︎
+                            </button>
+                            <button
+                                onClick={handleLogout}
+                                className="w-full p-2 text-red-500 hover:bg-red-50 rounded-lg"
+                                title="Logout"
+                            >
+                                ⏻
+                            </button>
+                        </>
                     )}
                 </div>
             </aside>
