@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import AdminLayout from '../../components/layout/AdminLayout';
 import adminService from '../../services/adminService';
 
@@ -174,24 +175,43 @@ const Dashboard = () => {
 
                 {/* Quick Actions */}
                 <div className="bg-white rounded-lg shadow-md p-6">
-                    <h3 className="text-lg font-bold text-gray-800 mb-4">Quick Actions</h3>
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">⚡ Quick Actions</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all">
-                            <span className="text-2xl block mb-2">📚</span>
-                            <span className="text-sm font-medium">Manage Books</span>
-                        </button>
-                        <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all">
+                        <Link
+                            to="/admin/users"
+                            className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-center"
+                        >
                             <span className="text-2xl block mb-2">👥</span>
                             <span className="text-sm font-medium">Manage Users</span>
-                        </button>
-                        <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all">
+                        </Link>
+                        <Link
+                            to="/admin/orders"
+                            className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-center"
+                        >
                             <span className="text-2xl block mb-2">📦</span>
-                            <span className="text-sm font-medium">View Orders</span>
-                        </button>
-                        <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all">
+                            <span className="text-sm font-medium">Manage Orders</span>
+                        </Link>
+                        <Link
+                            to="/admin/books"
+                            className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-center"
+                        >
+                            <span className="text-2xl block mb-2">📚</span>
+                            <span className="text-sm font-medium">Manage Books</span>
+                        </Link>
+                        <Link
+                            to="/admin/inventory"
+                            className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-center"
+                        >
+                            <span className="text-2xl block mb-2">📋</span>
+                            <span className="text-sm font-medium">Inventory Management</span>
+                        </Link>
+                        <Link
+                            to="/admin/categories"
+                            className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-center"
+                        >
                             <span className="text-2xl block mb-2">🏷️</span>
-                            <span className="text-sm font-medium">Categories</span>
-                        </button>
+                            <span className="text-sm font-medium">Manage Categories</span>
+                        </Link>
                     </div>
                 </div>
 

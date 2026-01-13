@@ -31,6 +31,11 @@ const AdminLayout = ({ children }) => {
             icon: '📚',
         },
         {
+            name: 'Inventory Management',
+            path: '/admin/inventory',
+            icon: '📋',
+        },
+        {
             name: 'Manage Categories',
             path: '/admin/categories',
             icon: '🏷️',

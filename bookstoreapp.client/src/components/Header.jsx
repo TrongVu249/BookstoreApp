@@ -56,6 +56,7 @@ const Header = () => {
                     { name: 'Manage Users', path: '/admin/users', icon: '👥' },
                     { name: 'Manage Orders', path: '/admin/orders', icon: '📦' },
                     { name: 'Manage Books', path: '/admin/books', icon: '📚' },
+                    { name: 'Inventory Management', path: '/admin/inventory', icon: '📋' },
                     { name: 'Manage Categories', path: '/admin/categories', icon: '🏷️' },
                 ];
             case 'Staff':
