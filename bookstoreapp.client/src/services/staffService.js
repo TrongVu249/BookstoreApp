@@ -17,22 +17,6 @@ const staffService = {
         return response.data;
     },
 
-    // Inventory Management
-    updateStock: async (bookId, stockData) => {
-        const response = await api.put(`/inventory/${bookId}`, stockData);
-        return response.data;
-    },
-
-    getInventoryLogs: async (searchParams = {}) => {
-        const response = await api.get('/inventory/logs', { params: searchParams });
-        return response.data;
-    },
-
-    getLowStockBooks: async (threshold = 5) => {
-        const response = await api.get('/inventory/low-stock', { params: { threshold } });
-        return response.data;
-    },
-
     // Dashboard Stats
     getDashboardStats: async () => {
         // Get pending and processing orders

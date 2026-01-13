@@ -1,10 +1,9 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import StaffLayout from '../../components/layout/StaffLayout';
-import staffService from '../../services/staffService';
-import adminService from '../../services/adminService';
+import inventoryService from '../../services/inventoryService';
 
-const InventoryManagement = () => {
+const StaffInventoryManagement = () => {
     const [searchParams] = useSearchParams();
     const [books, setBooks] = useState([]);
     const [logs, setLogs] = useState([]);
@@ -34,8 +33,8 @@ const InventoryManagement = () => {
         try {
             setLoading(true);
             const [booksData, logsData] = await Promise.all([
-                adminService.getAllBooks(),
-                staffService.getInventoryLogs()
+                inventoryService.getAllBooks(),
+                inventoryService.getInventoryLogs()
             ]);
             setBooks(booksData);
             setLogs(logsData);
@@ -68,7 +67,7 @@ const InventoryManagement = () => {
 
         setUpdating(true);
         try {
-            await staffService.updateStock(selectedBook.id, {
+            await inventoryService.updateStock(selectedBook.id, {
                 quantityChange: parseInt(updateForm.quantityChange),
                 reason: updateForm.reason,
                 notes: updateForm.notes || null,
@@ -292,4 +291,4 @@ const InventoryManagement = () => {
     );
 };
 
-export default InventoryManagement;
+export default StaffInventoryManagement;

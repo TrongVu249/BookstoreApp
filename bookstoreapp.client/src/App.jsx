@@ -41,8 +41,9 @@ import OrderDetailAdmin from './pages/admin/OrderDetailAdmin';
 // Staff Pages
 import StaffDashboard from './pages/staff/StaffDashboard';
 import OrderFulfillment from './pages/staff/OrderFulfillment';
-import InventoryManagement from './pages/staff/InventoryManagement';
+import InventoryManagement from './pages/staff/StaffInventoryManagement';
 import OrderDetailStaff from './pages/staff/OrderDetailStaff';
+import StaffInventoryManagement from './pages/staff/StaffInventoryManagement';
 
 function App() {
     return (
@@ -192,7 +193,7 @@ function App() {
                         path="/staff/inventory"
                         element={
                             <ProtectedRoute allowedRoles={['Staff']}>
-                                <InventoryManagement />
+                                <StaffInventoryManagement />
                             </ProtectedRoute>
                         }
                     />

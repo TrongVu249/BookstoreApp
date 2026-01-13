@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import StaffLayout from '../../components/layout/StaffLayout';
 import staffService from '../../services/staffService';
+import inventoryService from '../../services/inventoryService';
 
 const StaffDashboard = () => {
     const [stats, setStats] = useState(null);
@@ -21,8 +22,8 @@ const StaffDashboard = () => {
 
             const [statsData, logsData, lowStockData] = await Promise.all([
                 staffService.getDashboardStats(),
-                staffService.getInventoryLogs(),
-                staffService.getLowStockBooks(10)
+                inventoryService.getInventoryLogs(),
+                inventoryService.getLowStockBooks(10)
             ]);
 
             setStats(statsData);
