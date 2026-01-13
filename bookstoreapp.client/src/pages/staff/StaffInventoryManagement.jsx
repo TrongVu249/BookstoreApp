@@ -6,6 +6,7 @@ import inventoryService from '../../services/inventoryService';
 const StaffInventoryManagement = () => {
     const [searchParams] = useSearchParams();
     const [books, setBooks] = useState([]);
+    const [lowStockBooks, setLowStockBooks] = useState([]);
     const [logs, setLogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -32,12 +33,14 @@ const StaffInventoryManagement = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [booksData, logsData] = await Promise.all([
+            const [booksData, logsData, lowStockData] = await Promise.all([
                 inventoryService.getAllBooks(),
-                inventoryService.getInventoryLogs()
+                inventoryService.getInventoryLogs(),
+                inventoryService.getLowStockBooks(10),
             ]);
             setBooks(booksData);
             setLogs(logsData);
+            setLowStockBooks(lowStockData);
         } catch (err) {
             console.error('Error fetching data:', err);
         } finally {
@@ -96,8 +99,6 @@ const StaffInventoryManagement = () => {
         );
     }
 
-    const lowStockBooks = books.filter(book => book.stockQuantity < 10);
-
     return (
         <StaffLayout>
             <div className="space-y-6">
@@ -129,7 +130,7 @@ const StaffInventoryManagement = () => {
                             </thead>
                             <tbody className="divide-y divide-gray-200">
                                 {books.map((book) => (
-                                    <tr key={book.id} className={`hover:bg-gray-50 ${book.stockQuantity < 10 ? 'bg-red-50' : ''}`}>
+                                    <tr key={book.id} className={`hover:bg-gray-50 ${(book.stockQuantity < 10 && book.status !== 'Discontinued') ? 'bg-red-50' : ''}`}>
                                         <td className="px-6 py-4">
                                             <div className="font-medium text-gray-900">{book.title}</div>
                                             <div className="text-sm text-gray-500">{book.author}</div>
