@@ -49,10 +49,6 @@ function App() {
         <AuthProvider>
             <Router>
                 <Routes>
-                    {/* Auth Routes - No Layout */}
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-
                     {/* Admin Routes - No Layout */}
                     {/* Admin Dashboard */}
                     <Route
@@ -207,6 +203,10 @@ function App() {
                         element={
                             <Layout>
                                 <Routes>
+                                    {/* Auth Routes */}
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/register" element={<Register />} />
+
                                     {/* Public Home */}
                                     <Route path="/" element={<Home />} />
 
