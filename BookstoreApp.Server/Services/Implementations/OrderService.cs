@@ -12,18 +12,18 @@ namespace BookstoreApp.Server.Services.Implementations
         private readonly BookstoreDbContext _context;
         private readonly ICartService _cartService;
         private readonly IPaymentService _paymentService;
-        private readonly IInventoryService _inventoryService; // ADD THIS LINE
+        private readonly IInventoryService _inventoryService; 
 
         public OrderService(
             BookstoreDbContext context,
             ICartService cartService,
             IPaymentService paymentService,
-            IInventoryService inventoryService) // ADD THIS PARAMETER
+            IInventoryService inventoryService) 
         {
             _context = context;
             _cartService = cartService;
             _paymentService = paymentService;
-            _inventoryService = inventoryService; // ADD THIS LINE
+            _inventoryService = inventoryService;
         }
 
         public async Task<OrderDto> CreateOrderAsync(int userId, CreateOrderDto dto)
@@ -186,7 +186,7 @@ namespace BookstoreApp.Server.Services.Implementations
         }
 
         //// ADMIN Services below
-        // New method for admin to get orders with user info
+        // Get orders with user info
         public async Task<List<AdminOrderSummaryDto>> GetAllOrdersForAdminAsync(
             int? status = null,
             int? userId = null,

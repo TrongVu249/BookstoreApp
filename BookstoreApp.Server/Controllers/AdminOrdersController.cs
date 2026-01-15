@@ -17,9 +17,7 @@ namespace BookstoreApp.Server.Controllers
             _orderService = orderService;
         }
 
-        /// <summary>
         /// Get all orders from all users (Admin/Staff only)
-        /// </summary>
         [HttpGet]
         public async Task<ActionResult<List<AdminOrderSummaryDto>>> GetAllOrders(
             [FromQuery] int? status = null,
@@ -40,9 +38,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// <summary>
         /// Get specific order by ID (any user's order)
-        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderDto>> GetOrderById(int id)
         {
@@ -61,9 +57,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// <summary>
         /// Update order status
-        /// </summary>
         [HttpPut("{id}/status")]
         public async Task<ActionResult> UpdateOrderStatus(
             int id,
@@ -88,9 +82,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// <summary>
         /// Get order statistics for dashboard
-        /// </summary>
         [Authorize(Roles = "Admin")]
         [HttpGet("statistics")]
         public async Task<ActionResult<OrderStatisticsDto>> GetStatistics()
@@ -106,9 +98,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// <summary>
         /// Cancel any user's order (Admin only)
-        /// </summary>
         [Authorize(Roles = "Admin")]
         [HttpPost("{id}/cancel")]
         public async Task<ActionResult> CancelOrder(int id)

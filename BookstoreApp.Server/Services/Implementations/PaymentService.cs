@@ -18,7 +18,6 @@ namespace BookstoreApp.Server.Services.Implementations
         public async Task<Payment> ProcessPaymentAsync(int orderId, decimal amount, string paymentMethod)
         {
             // Mock payment processing
-            // In future, integrate with Stripe, PayPal, etc.
 
             var payment = new Payment
             {

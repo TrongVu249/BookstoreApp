@@ -17,9 +17,7 @@ namespace BookstoreApp.Server.Controllers
             _dashboardService = dashboardService;
         }
 
-        /// <summary>
         /// Get comprehensive dashboard data including stats, charts, and alerts
-        /// </summary>
         /*
         [HttpGet]
         public async Task<ActionResult<DashboardDto>> GetDashboardData()
@@ -37,9 +35,7 @@ namespace BookstoreApp.Server.Controllers
         */
 
 
-        /// <summary>
         /// Get only statistics
-        /// </summary>
         [HttpGet("statistics")]
         public async Task<ActionResult<DashboardStatistics>> GetStatistics()
         {

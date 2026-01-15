@@ -18,9 +18,7 @@ namespace BookstoreApp.Server.Controllers
             _inventoryService = inventoryService;
         }
 
-        /// <summary>
         /// Update book stock quantity and log the change
-        /// </summary>
         [HttpPut("{bookId}")]
         public async Task<ActionResult> UpdateStock(
             int bookId,
@@ -51,9 +49,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// <summary>
         /// Get inventory change logs with filters
-        /// </summary>
         [HttpGet("logs")]
         public async Task<ActionResult<List<InventoryLogDto>>> GetLogs(
             [FromQuery] int? bookId = null,
@@ -73,9 +69,7 @@ namespace BookstoreApp.Server.Controllers
             }
         }
 
-        /// <summary>
         /// Get books with low stock (below threshold)
-        /// </summary>
         [HttpGet("low-stock")]
         public async Task<ActionResult<List<LowStockBookDto>>> GetLowStockBooks(
             [FromQuery] int threshold = 5)
