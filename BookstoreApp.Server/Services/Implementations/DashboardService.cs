@@ -81,7 +81,7 @@ namespace BookstoreApp.Server.Services.Implementations
             };
         }
 
-        // The following methods are commented out for now but can be implemented as needed.
+        // The following methods are commented out for now
         /*
         public async Task<DashboardDto> GetDashboardDataAsync()
         {
