@@ -92,7 +92,7 @@ const Books = () => {
     };
 
     const handleSortChange = (value) => {
-        // Parse sort value (e.g., "price_asc" -> sortBy: "price", sortDescending: false)
+        // Parse sort value 
         const [sortField, sortOrder] = value.split('_');
         setSortBy(sortField);
         setSortDescending(sortOrder === 'desc');

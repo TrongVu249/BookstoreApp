@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
         return <Navigate to="/login" replace />;
     }
 
-    // Check if user has required role - SHOW ACCESS DENIED (not redirect)
+    // Check if user has required role - show denied access
     if (allowedRoles && !allowedRoles.includes(user?.role)) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">

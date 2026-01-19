@@ -31,7 +31,9 @@ namespace BookstoreApp.Server.Services.Implementations
             // Simulate payment processing
             await Task.Delay(1000); // Simulate API call delay
 
+
             // Mock: 90% success rate
+            /*
             var random = new Random();
             var isSuccess = random.Next(1, 11) <= 9; // 90% chance
 
@@ -46,6 +48,11 @@ namespace BookstoreApp.Server.Services.Implementations
                 payment.Status = PaymentStatus.Failed;
                 payment.FailureReason = "Payment declined by bank. Please try another payment method.";
             }
+            */
+
+            payment.Status = PaymentStatus.Completed;
+            payment.TransactionId = GenerateTransactionId();
+            payment.CompletedAt = DateTime.UtcNow;
 
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();

@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 const Home = () => {
     const { user, isAuthenticated } = useAuth();
 
-    // Mock featured books (will be replaced with API call in future)
+    // Mock featured books 
     const featuredBooks = [
         {
             id: 1,

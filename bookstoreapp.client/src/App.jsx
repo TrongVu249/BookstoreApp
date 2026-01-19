@@ -4,7 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 
-// Auth Pages (no layout)
+// Auth Pages
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 
