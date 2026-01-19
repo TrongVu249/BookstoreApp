@@ -333,6 +333,32 @@ namespace BookstoreApp.Server.Data
                     Role = UserRole.Admin,
                     IsActive = true,
                     CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new User
+                {
+                    Id = 14,
+                    UserName = "minh.nguyen",
+                    Email = "minh.nguyen@gmail.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Test@123"),
+                    FullName = "Nguyen Minh Quan",
+                    PhoneNumber = "0903123456",
+                    Address = "Ba Dinh District, Hanoi",
+                    Role = UserRole.Customer,
+                    IsActive = true,
+                    CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new User
+                {
+                    Id = 15,
+                    UserName = "alex.morgan",
+                    Email = "alex.morgan@bookstore.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Test@123"),
+                    FullName = "Alex Morgan",
+                    PhoneNumber = "555-3012",
+                    Address = "Warehouse Center, CA",
+                    Role = UserRole.Staff,
+                    IsActive = true,
+                    CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
 
@@ -439,6 +465,125 @@ namespace BookstoreApp.Server.Data
                     CategoryId = 6,
                     Status = BookStatus.Available,
                     CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Book
+                {
+                    Id = 7,
+                    ISBN = "978-0307474278",
+                    Title = "The Road",
+                    Author = "Cormac McCarthy",
+                    Description = "A post-apocalyptic journey of a father and son through a devastated world.",
+                    Price = 16.99m,
+                    StockQuantity = 30,
+                    Publisher = "Vintage",
+                    PublishDate = new DateTime(2006, 9, 26),
+                    PageCount = 287,
+                    Language = "English",
+                    CategoryId = 1,
+                    Status = BookStatus.Available,
+                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Book
+                {
+                    Id = 8,
+                    ISBN = "978-0812981605",
+                    Title = "Educated",
+                    Author = "Tara Westover",
+                    Description = "A memoir about growing up without formal education and the pursuit of knowledge.",
+                    Price = 18.99m,
+                    StockQuantity = 28,
+                    Publisher = "Random House",
+                    PublishDate = new DateTime(2018, 2, 20),
+                    PageCount = 352,
+                    Language = "English",
+                    CategoryId = 2,
+                    Status = BookStatus.Available,
+                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Book
+                {
+                    Id = 9,
+                    ISBN = "978-0393354324",
+                    Title = "The Gene: An Intimate History",
+                    Author = "Siddhartha Mukherjee",
+                    Description = "A comprehensive exploration of the history and future of genetic research.",
+                    Price = 21.99m,
+                    StockQuantity = 22,
+                    Publisher = "Scribner",
+                    PublishDate = new DateTime(2016, 5, 17),
+                    PageCount = 608,
+                    Language = "English",
+                    CategoryId = 3,
+                    Status = BookStatus.Available,
+                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Book
+                {
+                    Id = 10,
+                    ISBN = "978-1617294532",
+                    Title = "ASP.NET Core in Action",
+                    Author = "Andrew Lock",
+                    Description = "A practical guide to building modern web applications with ASP.NET Core.",
+                    Price = 49.99m,
+                    StockQuantity = 18,
+                    Publisher = "Manning",
+                    PublishDate = new DateTime(2018, 8, 1),
+                    PageCount = 825,
+                    Language = "English",
+                    CategoryId = 4,
+                    Status = BookStatus.Available,
+                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Book
+                {
+                    Id = 11,
+                    ISBN = "978-1501124020",
+                    Title = "Becoming",
+                    Author = "Michelle Obama",
+                    Description = "An inspiring memoir by the former First Lady of the United States.",
+                    Price = 20.99m,
+                    StockQuantity = 35,
+                    Publisher = "Crown",
+                    PublishDate = new DateTime(2018, 11, 13),
+                    PageCount = 448,
+                    Language = "English",
+                    CategoryId = 5,
+                    Status = BookStatus.Available,
+                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Book
+                {
+                    Id = 12,
+                    ISBN = "978-0553573404",
+                    Title = "A Game of Thrones",
+                    Author = "George R. R. Martin",
+                    Description = "The first book in the epic fantasy series A Song of Ice and Fire.",
+                    Price = 17.99m,
+                    StockQuantity = 70,
+                    Publisher = "Bantam",
+                    PublishDate = new DateTime(1996, 8, 6),
+                    PageCount = 694,
+                    Language = "English",
+                    CategoryId = 6,
+                    Status = BookStatus.Available,
+                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Book
+                {
+                    Id = 13,
+                    ISBN = "978-0385545969",
+                    Title = "The Silent Patient",
+                    Author = "Alex Michaelides",
+                    Description = "A psychological thriller about a woman who stops speaking after a tragic event.",
+                    Price = 15.99m,
+                    StockQuantity = 42,
+                    Publisher = "Celadon Books",
+                    PublishDate = new DateTime(2019, 2, 5),
+                    PageCount = 336,
+                    Language = "English",
+                    CategoryId = 7,
+                    Status = BookStatus.Available,
+                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
         }
