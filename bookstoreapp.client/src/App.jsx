@@ -221,22 +221,14 @@ function App() {
                                     {/* Public Home */}
                                     <Route path="/" element={<Home />} />
 
-                                    {/* Books - All authenticated users can view */}
+                                    {/* Books - All can view */}
                                     <Route
                                         path="/books"
-                                        element={
-                                            <ProtectedRoute allowedRoles={['Customer', 'Staff', 'Admin']}>
-                                                <Books />
-                                            </ProtectedRoute>
-                                        }
+                                        element={<Books />}
                                     />
                                     <Route
                                         path="/books/:id"
-                                        element={
-                                            <ProtectedRoute allowedRoles={['Customer', 'Staff', 'Admin']}>
-                                                <BookDetail />
-                                            </ProtectedRoute>
-                                        }
+                                        element={<BookDetail />}
                                     />
 
                                     {/* Profile - All authenticated users */}
