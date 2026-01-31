@@ -316,7 +316,7 @@ const Home = () => {
                         {categories.map((category) => (
                             <Link
                                 key={category.id}
-                                to={`/books?categoryId=${category.id}`}
+                                to={`/books?category=${category.id}`}
                                 className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg hover:scale-105 transition cursor-pointer"
                             >
                                 <p className="font-semibold text-gray-900">{category.name}</p>
