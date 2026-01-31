@@ -1,6 +1,7 @@
 ﻿import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import bookService from '../services/bookService';
 
 const Header = () => {
     const { user, logout, isAuthenticated } = useAuth();
@@ -8,6 +9,8 @@ const Header = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
     const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
+    const [categories, setCategories] = useState([]);
+
     const profileRef = useRef(null);
     const categoriesRef = useRef(null);
 
@@ -22,6 +25,18 @@ const Header = () => {
             }
         };
 
+        const fetchCategories = async () => {
+            try {
+                const data = await bookService.getCategories();
+                const active = data.filter(c => c.isActive);
+                setCategories(active);
+            } catch (error) {
+                console.error('Failed to load categories', error);
+            }
+        };
+
+        fetchCategories();
+
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
@@ -32,12 +47,6 @@ const Header = () => {
         setMobileMenuOpen(false);
         navigate('/login');
     };
-
-    // Sample categories
-    const categories = [
-        'Fiction', 'Non-Fiction', 'Science', 'History',
-        'Biography', 'Technology', 'Business', 'Self-Help'
-    ];
 
     // Profile dropdown menu items based on role
     const getProfileMenuItems = () => {
@@ -119,12 +128,12 @@ const Header = () => {
                                 <div className="absolute top-full mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border">
                                     {categories.map((category) => (
                                         <Link
-                                            key={category}
-                                            to={`/books?category=${category}`}
+                                            key={category.id}
+                                            to={`/books?category=${category.id}`}
                                             onClick={() => setCategoriesDropdownOpen(false)}
                                             className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
                                         >
-                                            {category}
+                                            {category.name}
                                         </Link>
                                     ))}
                                 </div>
@@ -242,12 +251,12 @@ const Header = () => {
                                 <div className="pl-4 space-y-2">
                                     {categories.map((category) => (
                                         <Link
-                                            key={category}
-                                            to={`/books?category=${category}`}
+                                            key={category.id}
+                                            to={`/books?category=${category.id}`}
                                             onClick={() => setMobileMenuOpen(false)}
                                             className="block text-gray-600 hover:text-blue-600"
                                         >
-                                            {category}
+                                            {category.name}
                                         </Link>
                                     ))}
                                 </div>

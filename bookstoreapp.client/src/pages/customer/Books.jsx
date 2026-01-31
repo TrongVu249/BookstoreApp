@@ -39,6 +39,11 @@ const Books = () => {
         fetchBooks();
     }, [selectedCategory, minPrice, maxPrice, selectedStatus, sortBy, sortDescending]);
 
+    // Update selected category when URL param changes
+    useEffect(() => {
+        setSelectedCategory(searchParams.get('category') || '');
+    }, [searchParams]);
+
     const fetchCategories = async () => {
         try {
             const data = await bookService.getCategories();
