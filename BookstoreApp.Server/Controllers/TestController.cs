@@ -1,7 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using BookstoreApp.Server.Data;
 using BookstoreApp.Server.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using BookstoreApp.Server.Services.Implementations;
+using QuestPDF.Fluent;
+
 
 namespace BookstoreApp.Server.Controllers
 {
@@ -105,5 +109,20 @@ namespace BookstoreApp.Server.Controllers
             return Ok(admin);
         }
         */
+
+        // Export order to pdf
+        [HttpGet("export/pdf")]
+        public IActionResult ExportOrdersPdf()
+        {
+            var orders = _context.Orders
+                .Include(o => o.User)
+                .ToList();
+
+            var document = new OrdersPdfDocument(orders);
+            var pdfBytes = document.GeneratePdf();
+
+            return File(pdfBytes, "application/pdf", "orders.pdf");
+        }
+
     }
 }

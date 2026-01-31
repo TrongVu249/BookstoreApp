@@ -1,13 +1,17 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;  
 using BookstoreApp.Server.Data; 
 using BookstoreApp.Server.Services;
-using BookstoreApp.Server.Services.Interfaces;
 using BookstoreApp.Server.Services.Implementations;
+using BookstoreApp.Server.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using QuestPDF.Infrastructure;
+using System.Text;  
 
 var builder = WebApplication.CreateBuilder(args);
+
+QuestPDF.Settings.License = LicenseType.Community;
+
 
 // Add services to the container.
 
