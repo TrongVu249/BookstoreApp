@@ -51,8 +51,10 @@ const Home = () => {
     return (
         <div className="bg-gray-50">
             {/* Hero Section */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-                <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-center">
+            <div className="relative bg-[url('/BooksHomePage.png')] bg-cover bg-center text-white">
+                <div className="absolute inset-0 bg-black/30"></div>
+
+                <div className="relative max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">
                         Welcome to Our Online Bookstore
                     </h1>
