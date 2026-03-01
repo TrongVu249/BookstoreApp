@@ -1,6 +1,6 @@
 # BookstoreApp
 
-![alt text]([http://url/to/img.png](https://github.com/TrongVu249/BookstoreApp/blob/master/bookstoreapp.client/public/Landing%20page.png))
+![Landing Page](https://raw.githubusercontent.com/TrongVu249/BookstoreApp/refs/heads/master/bookstoreapp.client/public/Landing%20page.png)
 
 This Project was built using ASP.NET for Backend and ReactJS as Frontend  
 
